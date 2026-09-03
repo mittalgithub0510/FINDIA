@@ -149,6 +149,9 @@ To enable parallel development across multiple engineers without merge conflicts
 - The `main` branch is protected and always deployable.
 - Branch off `main` as `feature/<feature-name>` (e.g. `feature/audio-player`).
 - Create pull requests into `main` with browser verification notes. Never push directly to `main`.
+- For detailed guides, see:
+  - 📖 **[CONTRIBUTOR_README.md](CONTRIBUTOR_README.md)** *(Aasaan Hinglish Guide for all steps)*
+  - 📘 **[CONTRIBUTING.md](CONTRIBUTING.md)** *(Standard English Guidelines)*
 
 ---
 
