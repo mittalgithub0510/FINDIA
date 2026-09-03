@@ -25,7 +25,7 @@ We follow the **Feature Branch Workflow**:
 ### 1. Clone the Repository
 If you are a direct collaborator:
 ```bash
-git clone https://github.com/<your-username>/Findia.git
+git clone https://github.com/Kislaya-06/Findia.git
 cd Findia
 ```
 *(If you are an external contributor, first **Fork** the repository on GitHub, then clone your fork).*
