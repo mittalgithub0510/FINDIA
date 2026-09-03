@@ -1,0 +1,386 @@
+@import "tailwindcss";
+
+/* ==============================================================================
+ * FINDIA DESIGN SYSTEM TOKENS & CONFIGURATION (Tailwind CSS v4 CSS-first @theme)
+ * DARK MODE ONLY — Deep warm near-black surfaces with brown/amber undertones.
+ * Neutrals: Fixed across all cities.
+ * Accent: Consumed ONLY via runtime CSS custom properties (--accent-300, --accent-500, --accent-700).
+ * ============================================================================== */
+
+@theme {
+  /* Typography Families */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-deva: "Noto Serif Devanagari", serif;
+
+  /* Neutrals: Surfaces (Warm near-black) */
+  --color-bg-base: #12100E;
+  --color-bg-raised: #1A1714;
+  --color-bg-overlay: #241F1A;
+  --color-bg-elevated: #2E2721;
+
+  /* Neutrals: Borders */
+  --color-border-subtle: #2A241E;
+  --color-border-default: #3A322A;
+  --color-border-strong: #574A3D;
+
+  /* Neutrals: Text
+   * Note: text-high adjusted from #F5EFE6 to #F8F3EC to guarantee >= 4.5:1 WCAG AA
+   * body text contrast on Delhi's sandstone accent-500 (#C1440E: 4.64:1). */
+  --color-text-high: #F8F3EC;
+  --color-text-mid: #BFB3A4;
+  --color-text-low: #8A7F72;
+  --color-text-inverse: #12100E;
+
+  /* Fixed Semantic Colors (City-Independent) */
+  --color-sos: #E23B2E;
+  --color-sos-dim: #7A1F18;
+  --color-success: #2FA36B;
+  --color-warning: #E0A02E;
+  --color-info: #5B8FA8;
+
+  /* First-Class Semantic Set: Live Crowd Status */
+  --color-crowd-low: #2FA36B;
+  --color-crowd-moderate: #E0A02E;
+  --color-crowd-heavy: #E2603B;
+  --color-crowd-unknown: #8A7F72;
+
+  /* Dynamic Accent Tokens (Resolved via runtime CSS variables) */
+  --color-accent-300: var(--accent-300);
+  --color-accent-500: var(--accent-500);
+  --color-accent-700: var(--accent-700);
+  --color-accent-soft: var(--accent-soft);
+
+  /* Semantic Aliases (Components consume these instead of raw tokens) */
+  --color-background: var(--color-bg-base);
+  --color-surface: var(--color-bg-base);
+  --color-surface-raised: var(--color-bg-raised);
+  --color-surface-overlay: var(--color-bg-overlay);
+  --color-surface-elevated: var(--color-bg-elevated);
+  --color-border: var(--color-border-default);
+  --color-border-subtle-alias: var(--color-border-subtle);
+  --color-border-strong-alias: var(--color-border-strong);
+  --color-brand: var(--color-accent-500);
+  --color-danger: var(--color-sos);
+
+  /* Radius Scale */
+  --radius-sharp: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+
+  /* Warm-Tinted Elevation Shadows */
+  --shadow-soft: 0 2px 8px -1px rgba(18, 16, 14, 0.5), 0 1px 4px -1px rgba(18, 16, 14, 0.3);
+  --shadow-card: 0 4px 20px -2px rgba(18, 16, 14, 0.6), 0 2px 6px -1px rgba(18, 16, 14, 0.4);
+  --shadow-lifted: 0 12px 36px -4px rgba(18, 16, 14, 0.75), 0 4px 12px -2px rgba(18, 16, 14, 0.5);
+  --shadow-glass: 0 8px 32px 0 rgba(18, 16, 14, 0.45);
+
+  /* Motion Tokens */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --duration-reveal: 600ms;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==============================================================================
+ * RUNTIME ACCENT VARIABLE FALLBACKS
+ * Overridden dynamically per active city by CityContext
+ * ============================================================================== */
+:root {
+  --accent-300: #E88A6B;
+  --accent-500: #C1440E;
+  --accent-700: #7E2C09;
+  --accent-soft: rgba(193, 68, 14, 0.14);
+  --accent-soft: color-mix(in srgb, var(--accent-500) 14%, transparent);
+}
+
+/* ==============================================================================
+ * BASE LAYER & ACCESSIBILITY RESETS
+ * ============================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-mid);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--accent-500);
+  color: #F8F3EC;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-text-high);
+  margin: 0;
+}
+
+/* Global focus ring using city accent */
+:focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
+}
+
+/* Dark themed scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #12100E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3A322A;
+  border-radius: 4px;
+  border: 2px solid #12100E;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #574A3D;
+}
+
+/* Accessibility: Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==============================================================================
+ * TYPOGRAPHY SCALE UTILITIES
+ * Pair large display headlines with genuinely restrained small supporting text.
+ * ============================================================================== */
+.type-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.type-display {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.type-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.type-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+.type-h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.type-body-lg {
+  font-family: var(--font-sans);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.type-body {
+  font-family: var(--font-sans);
+  font-size: 1rem; /* 16px */
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.type-body-sm {
+  font-family: var(--font-sans);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.type-caption {
+  font-family: var(--font-sans);
+  font-size: 0.75rem; /* 12px */
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
+.type-overline {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem; /* 11px */
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.numeral {
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* ==============================================================================
+ * THE SIGNATURE THREE-TIER GLASS SYSTEM
+ * Rule: Glass must ONLY sit over photography or gradients.
+ * Rule: Never nest glass inside glass.
+ * Includes @supports not (backdrop-filter) solid fallbacks.
+ * ============================================================================== */
+
+/* Tier 1: Heavy Glass (Navbar, AI panel, modals, city switcher) */
+.glass-heavy {
+  background-color: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(255, 255, 255, 0.26);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(18, 16, 14, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-heavy {
+    background-color: #1A1714;
+    border-color: #3A322A;
+    box-shadow: 0 8px 32px 0 rgba(18, 16, 14, 0.6);
+  }
+}
+
+/* Tier 2: Panel Glass (Hero search bar, stats strip, floating cards) */
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.075);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-top-color: rgba(255, 255, 255, 0.18);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px 0 rgba(18, 16, 14, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-panel {
+    background-color: #241F1A;
+    border-color: #3A322A;
+    box-shadow: 0 4px 20px 0 rgba(18, 16, 14, 0.5);
+  }
+}
+
+/* Tier 3: Chip Glass (Badges, chips, and pills placed over bright photography) */
+.glass-chip {
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-chip {
+    background-color: #1A1714;
+    border-color: #574A3D;
+  }
+}
+
+/* ==============================================================================
+ * GRADIENTS, TEXTURES & SCRIMS
+ * ============================================================================== */
+
+/* Non-banding multi-stop bottom-up darkening scrim */
+.scrim-bottom {
+  background: linear-gradient(
+    to top,
+    rgba(18, 16, 14, 0.96) 0%,
+    rgba(18, 16, 14, 0.88) 18%,
+    rgba(18, 16, 14, 0.72) 36%,
+    rgba(18, 16, 14, 0.50) 54%,
+    rgba(18, 16, 14, 0.28) 72%,
+    rgba(18, 16, 14, 0.10) 88%,
+    transparent 100%
+  );
+}
+
+/* Softer all-over darkening for hero images */
+.scrim-full {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 16, 14, 0.45) 0%,
+    rgba(18, 16, 14, 0.35) 40%,
+    rgba(18, 16, 14, 0.70) 80%,
+    rgba(18, 16, 14, 0.92) 100%
+  );
+}
+
+/* Dynamic city accent gradient */
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-500) 0%, var(--accent-700) 100%);
+}
+
+/* Fixed viewport SVG feTurbulence noise grain */
+.grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ==============================================================================
+ * ACCESSIBILITY: REDUCED MOTION OVERRIDES
+ * ============================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
