@@ -1,5 +1,7 @@
 # Contributing to FINDIA 🇮🇳
 
+> 💡 **Hinglish Contributor Guide:** Agar aap Hindi / Hinglish me step-by-step guide dekhna chahte hain, toh [CONTRIBUTOR_README.md](CONTRIBUTOR_README.md) zaroor padhein!
+
 Thank you for your interest in contributing to **FINDIA**! This guide outlines how to contribute using Git branches and GitHub Pull Requests to keep collaboration clean, safe, and conflict-free.
 
 ---
