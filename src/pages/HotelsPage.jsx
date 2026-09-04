@@ -3,7 +3,7 @@ import { HotelsView } from '../features/hotels';
 
 export function HotelsPage() {
   return (
-    <div className="min-h-screen bg-bg-base text-text-high pt-20 pb-16">
+    <div className="min-h-screen bg-[#0F0D0B] text-[#F3EBDC] pt-16 pb-8">
       <HotelsView />
     </div>
   );

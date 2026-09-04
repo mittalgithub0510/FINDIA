@@ -67,33 +67,24 @@ export function HotelsView() {
   }, [searchQuery, selectedCategory, selectedZone, sortBy]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[15px] pb-6">
-      {/* Feature Header Banner */}
-      <div className="p-5 sm:p-7 rounded-[14px] bg-[#1B1613] border border-[#2E271F] relative overflow-hidden">
-        <div className="relative z-10 space-y-2.5 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#C9A24B]/[0.07] text-[#C9A24B] text-xs font-medium border border-[#8A7238]">
-            <Sparkles size={13} />
-            <span>FINDIA location smart directory</span>
+    <div className="space-y-3.5 sm:space-y-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 sm:pt-2 pb-6">
+      {/* Compact Feature Header Banner */}
+      <div className="p-3.5 sm:p-4.5 rounded-[12px] bg-[#1B1613] border border-[#2E271F] relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="relative z-10 space-y-1 max-w-3xl">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#C9A24B]/[0.07] text-[#C9A24B] text-[11px] font-medium border border-[#8A7238]">
+              <Sparkles size={12} />
+              <span>FINDIA location smart directory</span>
+            </div>
+            <div className="flex items-center gap-1.5 font-medium text-[#F3EBDC] text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5FA97C] animate-pulse" />
+              <span>48 verified properties in {cityName}</span>
+            </div>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-medium font-['Fraunces',serif] text-[#F3EBDC] leading-tight">
+          <h1 className="text-xl sm:text-2xl font-medium font-['Fraunces',serif] text-[#F3EBDC] leading-tight">
             {cityName} hotels & heritage stays
           </h1>
-
-          <p className="text-xs sm:text-sm text-[#9C9186] leading-relaxed">
-            Discover verified accommodations strategically situated near key location tourist attractions, transit hubs, and metro lines. Filtered for budget, transit, and luxury travelers.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3 text-xs text-[#9C9186] pt-1">
-            <div className="flex items-center gap-1.5 font-medium text-[#F3EBDC]">
-              <span className="w-2 h-2 rounded-full bg-[#5FA97C] animate-pulse" />
-              <span>48 verified properties</span>
-            </div>
-            <span>•</span>
-            <span>Exact transit walking distances</span>
-            <span>•</span>
-            <span>Contextual AI suitability</span>
-          </div>
         </div>
       </div>
 
@@ -112,20 +103,20 @@ export function HotelsView() {
         totalResults={filteredHotels.length}
       />
 
-      {/* Hotel Cards Grid */}
+      {/* Hotel Cards Grid: Minimum 3 cards per row on laptop (md:grid-cols-3) */}
       {filteredHotels.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4">
           {filteredHotels.map((hotel) => (
             <HotelCard key={hotel.id} hotel={hotel} onSelect={setSelectedHotel} />
           ))}
         </div>
       ) : (
-        <div className="p-10 text-center space-y-4 rounded-[14px] bg-[#1B1613] border border-[#2E271F]">
-          <div className="w-12 h-12 rounded-full bg-[#17130F] border border-[#2E271F] flex items-center justify-center mx-auto text-[#9C9186]">
-            <Search size={24} />
+        <div className="p-8 text-center space-y-3 rounded-[12px] bg-[#1B1613] border border-[#2E271F]">
+          <div className="w-10 h-10 rounded-full bg-[#17130F] border border-[#2E271F] flex items-center justify-center mx-auto text-[#9C9186]">
+            <Search size={20} />
           </div>
           <div className="space-y-1">
-            <h3 className="text-base font-medium text-[#F3EBDC]">No hotels match your filters</h3>
+            <h3 className="text-sm font-medium text-[#F3EBDC]">No hotels match your filters</h3>
             <p className="text-xs text-[#9C9186] max-w-sm mx-auto">
               Try adjusting your search query, selecting "All hotels" or clearing the tourist zone filter.
             </p>
