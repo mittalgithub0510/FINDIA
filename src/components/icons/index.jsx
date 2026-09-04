@@ -56,6 +56,8 @@ export function Close(props) {
   );
 }
 
+export const X = Close;
+
 export function Menu(props) {
   return (
     <IconBase {...props}>
@@ -646,52 +648,5 @@ export function MessageSquare(props) {
     </IconBase>
   );
 }
-
-export function X(props) {
-  return <Close {...props} />;
-}
-
-export function Navigation(props) {
-  return (
-    <IconBase {...props}>
-      <polygon points="3 11 22 2 13 21 11 13 3 11" />
-    </IconBase>
-  );
-}
-
-export function Wifi(props) {
-  return (
-    <IconBase {...props}>
-      <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-      <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-      <line x1="12" y1="20" x2="12.01" y2="20" />
-    </IconBase>
-  );
-}
-
-export function Coffee(props) {
-  return (
-    <IconBase {...props}>
-      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-      <line x1="6" y1="1" x2="6" y2="4" />
-      <line x1="10" y1="1" x2="10" y2="4" />
-      <line x1="14" y1="1" x2="14" y2="4" />
-    </IconBase>
-  );
-}
-
-export function Car(props) {
-  return (
-    <IconBase {...props}>
-      <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.6C1.4 11.1 1 11.9 1 12.7V16c0 .6.4 1 1 1h2" />
-      <circle cx="7" cy="17" r="2" />
-      <circle cx="17" cy="17" r="2" />
-    </IconBase>
-  );
-}
-
-
 
 

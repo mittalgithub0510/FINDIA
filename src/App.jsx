@@ -42,6 +42,7 @@ export default function App() {
             {/* Destination Routes */}
             <Route path="/destination/north/delhi" element={<DelhiPage />} />
             <Route path="/destinations/delhi" element={<DelhiPage />} />
+            <Route path="/destinations/delhi/:placeSlug" element={<PlaceDetailView />} />
             <Route path="/destination/north/delhi/:placeSlug" element={<PlaceDetailView />} />
             <Route path="/destination/coming-soon" element={<ComingSoonPage />} />
 
