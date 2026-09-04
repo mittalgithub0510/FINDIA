@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Building, Sparkles, MapPin, Search, Star, Shield, Filter, ArrowRight } from '../../components/icons';
-import GlassPanel from '../../components/common/GlassPanel';
-import Badge from '../../components/common/Badge';
+import { Sparkles, Search } from '../../components/icons';
 import { DELHI_HOTELS_DATA } from '../../data/delhi/hotels.js';
 import HotelCard from './HotelCard';
 import HotelFilterBar from './HotelFilterBar';
@@ -25,13 +23,13 @@ export function HotelsView() {
     return Array.from(set);
   }, []);
 
-  // Compute category counts
+  // Compute category counts (sentence case)
   const categoryCounts = useMemo(() => {
     return [
-      { id: 'all', label: 'All Hotels', count: DELHI_HOTELS_DATA.length },
-      { id: 'budget', label: 'Budget (₹800–₹2.5k)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'budget').length },
-      { id: 'moderate', label: 'Moderate (₹2.5k–₹6k)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'moderate').length },
-      { id: 'premium', label: 'Premium Luxury (₹6k+)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'premium').length }
+      { id: 'all', label: 'All hotels', count: DELHI_HOTELS_DATA.length },
+      { id: 'budget', label: 'Budget friendly (₹800–₹2.5k)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'budget').length },
+      { id: 'moderate', label: 'Mid-range (₹2.5k–₹6k)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'moderate').length },
+      { id: 'premium', label: 'Premium luxury (₹6k+)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'premium').length }
     ];
   }, []);
 
@@ -67,33 +65,33 @@ export function HotelsView() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Feature Header Banner */}
-      <GlassPanel className="p-6 sm:p-8 rounded-3xl relative overflow-hidden border-white/20">
-        <div className="relative z-10 space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 text-xs font-mono font-bold uppercase tracking-wider border border-amber-500/30">
+      <div className="p-6 sm:p-8 rounded-[14px] bg-[#1B1613] border border-[#322A22] relative overflow-hidden">
+        <div className="relative z-10 space-y-3 max-w-3xl">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C9A24B]/10 text-[#C9A24B] text-xs font-medium border border-[#C9A24B]/30">
             <Sparkles size={13} />
-            <span>FINDIA Smart Tourism Directory</span>
+            <span>FINDIA smart tourism directory</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-text-high leading-tight">
-            Delhi Hotels & Heritage Stays
+          <h1 className="text-3xl sm:text-4xl font-medium font-['Fraunces',serif] text-[#F3EBDC] leading-tight">
+            Delhi hotels & heritage stays
           </h1>
 
-          <p className="text-sm sm:text-base text-text-mid leading-relaxed">
+          <p className="text-sm sm:text-base text-[#9C9186] leading-relaxed">
             Discover verified hotels strategically situated near major Delhi attractions — Red Fort, Humayun's Tomb, Qutub Minar, Connaught Place & Lotus Temple. Filtered for budget, transit, and luxury travelers.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 text-xs text-text-high pt-2">
-            <div className="flex items-center gap-1.5 font-mono">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>48 Verified Properties</span>
+          <div className="flex flex-wrap items-center gap-4 text-xs text-[#9C9186] pt-2">
+            <div className="flex items-center gap-1.5 font-medium text-[#F3EBDC]">
+              <span className="w-2 h-2 rounded-full bg-[#5FA97C] animate-pulse" />
+              <span>48 verified properties</span>
             </div>
-            <div className="text-text-low">•</div>
-            <span>Exact Metro Walking Distances</span>
-            <div className="text-text-low">•</div>
-            <span>Contextual AI Suitability</span>
+            <span>•</span>
+            <span>Exact metro walking distances</span>
+            <span>•</span>
+            <span>Contextual AI suitability</span>
           </div>
         </div>
-      </GlassPanel>
+      </div>
 
       {/* Filter Bar */}
       <HotelFilterBar
@@ -118,14 +116,14 @@ export function HotelsView() {
           ))}
         </div>
       ) : (
-        <GlassPanel className="p-12 text-center space-y-4 rounded-3xl">
-          <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto text-text-low">
+        <div className="p-12 text-center space-y-4 rounded-[14px] bg-[#1B1613] border border-[#322A22]">
+          <div className="w-12 h-12 rounded-full bg-[#241E1A] border border-[#322A22] flex items-center justify-center mx-auto text-[#9C9186]">
             <Search size={24} />
           </div>
           <div className="space-y-1">
-            <h3 className="text-base font-bold text-text-high">No hotels match your filters</h3>
-            <p className="text-xs text-text-mid max-w-sm mx-auto">
-              Try adjusting your search query, selecting "All Hotels" or clearing the tourist zone filter.
+            <h3 className="text-base font-medium text-[#F3EBDC]">No hotels match your filters</h3>
+            <p className="text-xs text-[#9C9186] max-w-sm mx-auto">
+              Try adjusting your search query, selecting "All hotels" or clearing the tourist zone filter.
             </p>
           </div>
           <button
@@ -134,11 +132,11 @@ export function HotelsView() {
               setSelectedCategory('all');
               setSelectedZone('all');
             }}
-            className="px-4 py-2 rounded-xl bg-amber-500 text-bg-base font-bold text-xs shadow-lifted"
+            className="px-4 py-2 rounded-xl bg-[#C9A24B] text-[#0F0D0B] font-semibold text-xs hover:brightness-110 transition-all"
           >
-            Reset All Filters
+            Reset all filters
           </button>
-        </GlassPanel>
+        </div>
       )}
 
       {/* Detail Modal */}
