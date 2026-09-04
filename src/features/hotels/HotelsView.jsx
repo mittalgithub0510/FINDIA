@@ -67,7 +67,7 @@ export function HotelsView() {
   }, [searchQuery, selectedCategory, selectedZone, sortBy]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+    <div className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[15px] pb-6">
       {/* Feature Header Banner */}
       <div className="p-5 sm:p-7 rounded-[14px] bg-[#1B1613] border border-[#2E271F] relative overflow-hidden">
         <div className="relative z-10 space-y-2.5 max-w-3xl">
