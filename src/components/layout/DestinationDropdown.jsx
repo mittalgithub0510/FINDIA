@@ -82,7 +82,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
         >
           <span className="flex items-center gap-2">
             <span>Destination</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-sans font-bold border border-emerald-500/40 flex items-center gap-1">
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-sans font-bold border border-emerald-500/40 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Delhi Live
             </span>
@@ -94,7 +94,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
         </button>
 
         {isOpen && (
-          <div className="pl-2 pr-1 py-3 space-y-4 rounded-xl bg-bg-raised/80 border border-white/10 animate-in fade-in duration-fast">
+          <div className="pl-2 pr-1 py-3 space-y-4 rounded-xl bg-[#17130F] border border-[#2E271F] animate-in fade-in duration-fast">
             {/* Region Tabs */}
             <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-none px-1">
               {DESTINATIONS_CONFIG.map((region) => (
@@ -105,8 +105,8 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                   className={cn(
                     'px-3 py-1.5 text-xs font-bold rounded-lg shrink-0 transition-colors',
                     activeRegionId === region.id
-                      ? 'bg-amber-500 text-bg-base font-extrabold shadow-md'
-                      : 'bg-white/10 text-text-high hover:bg-white/20'
+                      ? 'bg-[#C9A24B] text-[#0F0D0B] font-extrabold shadow-md'
+                      : 'bg-[#1B1613] text-[#9C9186] hover:bg-[#241E1A] hover:text-[#F3EBDC]'
                   )}
                 >
                   {region.region}
@@ -116,7 +116,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
 
             {/* States List for Active Region */}
             <div className="space-y-2 max-h-60 overflow-y-auto px-1">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-bold mb-1">
+              <div className="text-[11px] font-mono uppercase tracking-wider text-[#C9A24B] font-bold mb-1">
                 {activeRegion.region} Region States & UTs
               </div>
               {activeRegion.states.map((state) => (
@@ -126,21 +126,21 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                   className={cn(
                     'flex items-center justify-between p-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer select-none border',
                     state.isLive
-                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-200 hover:bg-amber-500/30'
-                      : 'bg-white/5 border-white/10 text-text-high hover:bg-white/10'
+                      ? 'bg-[#C9A24B]/15 border-[#8A7238] text-[#F3EBDC] hover:bg-[#C9A24B]/25'
+                      : 'bg-[#1B1613] border-[#2E271F] text-[#9C9186] hover:bg-[#241E1A] hover:text-[#F3EBDC]'
                   )}
                 >
                   <span className="flex items-center gap-2">
-                    <MapPin size={15} className={state.isLive ? 'text-amber-400' : 'text-indigo-400'} />
+                    <MapPin size={15} className={state.isLive ? 'text-[#C9A24B]' : 'text-[#9C9186]'} />
                     <span>{state.name}</span>
                   </span>
                   {state.isLive ? (
-                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/25 text-emerald-300 border border-emerald-500/50 flex items-center gap-1">
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      LIVE NOW
+                      EXPLORE
                     </span>
                   ) : (
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+                    <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-600/20 text-blue-300 border border-blue-500/40">
                       Coming Soon
                     </span>
                   )}
@@ -153,7 +153,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
     );
   }
 
-  // Desktop Hoverable / Clickable Mega Menu
+  // Desktop Hoverable / Clickable Mega Menu with Solid Opaque Background (#17130F)
   return (
     <div
       ref={dropdownRef}
@@ -161,7 +161,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
       onMouseLeave={handleMouseLeave}
       className="relative flex items-center"
     >
-      {/* Simple Navbar Trigger Button (As Requested) */}
+      {/* Navbar Trigger Button */}
       <button
         type="button"
         onClick={handleTriggerClick}
@@ -170,35 +170,35 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
         className={cn(
           'flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-sm transition-colors duration-fast outline-none cursor-pointer',
           isOpen
-            ? 'text-amber-400 font-semibold bg-white/10'
-            : 'text-text-mid hover:text-text-high hover:bg-white/5'
+            ? 'text-[#C9A24B] font-semibold bg-white/10'
+            : 'text-[#9C9186] hover:text-[#F3EBDC] hover:bg-white/5'
         )}
       >
         <span>Destination</span>
         <ChevronDown
           size={14}
-          className={cn('transition-transform duration-base', isOpen && 'rotate-180 text-amber-400')}
+          className={cn('transition-transform duration-base', isOpen && 'rotate-180 text-[#C9A24B]')}
         />
       </button>
 
-      {/* Enhanced Mega Dropdown Panel */}
+      {/* Solid Opaque Mega Dropdown Panel */}
       {isOpen && (
-        <div className="absolute left-0 mt-2 top-full w-[560px] rounded-2xl glass-heavy border border-amber-500/30 shadow-lifted z-[70] overflow-hidden animate-in fade-in zoom-in-95 duration-fast p-4">
+        <div className="absolute left-0 mt-2 top-full w-[560px] rounded-2xl bg-[#17130F] border border-[#2E271F] shadow-2xl z-[70] overflow-hidden animate-in fade-in zoom-in-95 duration-fast p-4 text-[#F3EBDC]">
           
           {/* Header Bar */}
-          <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#2E271F]">
             <div className="flex items-center gap-2">
-              <Sparkle size={16} className="text-amber-400" />
-              <span className="text-xs font-bold uppercase tracking-wider text-text-high font-display">
+              <Sparkle size={16} className="text-[#C9A24B]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[#F3EBDC] font-display">
                 Explore India Destinations
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Delhi Live
               </span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+              <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-600/20 text-blue-300 border border-blue-500/40">
                 35 States Coming Soon
               </span>
             </div>
@@ -207,8 +207,8 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
           <div className="grid grid-cols-12 gap-4 min-h-[300px]">
             
             {/* Left Column: Clear Bold Regions List */}
-            <div className="col-span-5 space-y-1.5 border-r border-white/10 pr-3">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-400 px-2 mb-2">
+            <div className="col-span-5 space-y-1.5 border-r border-[#2E271F] pr-3">
+              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#C9A24B] px-2 mb-2">
                 Select Region
               </div>
               {DESTINATIONS_CONFIG.map((region) => {
@@ -224,8 +224,8 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                     className={cn(
                       'w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all text-left group cursor-pointer border',
                       isActive
-                        ? 'bg-amber-500 text-bg-base border-amber-400 shadow-md font-extrabold'
-                        : 'bg-white/5 text-text-high hover:bg-white/15 hover:border-white/20 border-white/10'
+                        ? 'bg-[#C9A24B] text-[#0F0D0B] border-[#C9A24B] shadow-md font-extrabold'
+                        : 'bg-[#1B1613] text-[#F3EBDC] hover:bg-[#241E1A] hover:border-[#322A22] border-[#2E271F]'
                     )}
                   >
                     <span className="flex items-center gap-2">
@@ -233,7 +233,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                       {hasLiveState && (
                         <span className={cn(
                           "w-2 h-2 rounded-full",
-                          isActive ? "bg-bg-base" : "bg-emerald-400 animate-ping"
+                          isActive ? "bg-[#0F0D0B]" : "bg-emerald-400 animate-ping"
                         )} />
                       )}
                     </span>
@@ -241,7 +241,7 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                       size={14}
                       className={cn(
                         'transition-transform',
-                        isActive ? 'text-bg-base translate-x-0.5' : 'text-text-low group-hover:text-text-high'
+                        isActive ? 'text-[#0F0D0B] translate-x-0.5' : 'text-[#9C9186] group-hover:text-[#F3EBDC]'
                       )}
                     />
                   </button>
@@ -253,14 +253,14 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
             <div className="col-span-7 pl-1 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-amber-300 font-display">
+                  <span className="text-xs font-bold text-[#C9A24B] font-display">
                     {activeRegion.region} Region States & UTs
                   </span>
-                  <span className="text-[10px] text-text-low font-mono font-semibold">
+                  <span className="text-[10px] text-[#9C9186] font-mono font-semibold">
                     {activeRegion.states.length} Destinations
                   </span>
                 </div>
-                <p className="text-[11px] text-text-mid mb-3 leading-relaxed">
+                <p className="text-[11px] text-[#9C9186] mb-3 leading-relaxed">
                   {activeRegion.description}
                 </p>
 
@@ -272,8 +272,8 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                       className={cn(
                         'group flex items-center justify-between p-2.5 rounded-xl text-xs transition-all cursor-pointer select-none border',
                         state.isLive
-                          ? 'bg-amber-500/20 border-amber-500/50 text-amber-100 hover:bg-amber-500/30 hover:border-amber-400 shadow-sm font-bold'
-                          : 'bg-white/5 border-white/10 text-text-high hover:bg-white/15 hover:border-white/20'
+                          ? 'bg-[#C9A24B]/15 border-[#8A7238] text-[#F3EBDC] hover:bg-[#C9A24B]/25 hover:border-[#C9A24B] shadow-sm font-bold'
+                          : 'bg-[#1B1613] border-[#2E271F] text-[#F3EBDC] hover:bg-[#241E1A] hover:border-[#322A22]'
                       )}
                     >
                       <div className="flex items-center gap-2">
@@ -281,21 +281,21 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
                           size={14}
                           className={cn(
                             'shrink-0',
-                            state.isLive ? 'text-amber-400' : 'text-indigo-400 group-hover:text-indigo-300'
+                            state.isLive ? 'text-[#C9A24B]' : 'text-[#9C9186] group-hover:text-[#F3EBDC]'
                           )}
                         />
-                        <span className={state.isLive ? 'font-bold text-amber-200' : 'font-semibold text-text-high'}>
+                        <span className={state.isLive ? 'font-bold text-[#F3EBDC]' : 'font-semibold text-[#9C9186]'}>
                           {state.name}
                         </span>
                       </div>
 
                       {state.isLive ? (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/25 text-emerald-300 border border-emerald-500/50 flex items-center gap-1 shadow-sm">
+                        <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 shadow-sm">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           EXPLORE
                         </span>
                       ) : (
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+                        <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-600/20 text-blue-300 border border-blue-500/40">
                           Coming Soon
                         </span>
                       )}
@@ -305,12 +305,12 @@ export function DestinationDropdown({ isMobile = false, onCloseMobile }) {
               </div>
 
               {/* Bottom hint banner */}
-              <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-text-mid">
+              <div className="mt-3 pt-2 border-t border-[#2E271F] flex items-center justify-between text-[10px] text-[#9C9186]">
                 <span>Click any state to preview</span>
                 <Link
                   to="/destination/north/delhi"
                   onClick={() => setIsOpen(false)}
-                  className="text-amber-400 font-bold hover:underline flex items-center gap-1"
+                  className="text-[#C9A24B] font-bold hover:underline flex items-center gap-1"
                 >
                   <span>Explore Delhi Now</span>
                   <ChevronRight size={12} />

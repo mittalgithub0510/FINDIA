@@ -293,6 +293,18 @@ export function Metro(props) {
   );
 }
 
+export function Bus(props) {
+  return (
+    <IconBase {...props}>
+      <rect x="4" y="3" width="16" height="16" rx="2" />
+      <path d="M4 11h16" />
+      <path d="M8 15h.01M16 15h.01" />
+      <path d="M6 19v2M18 19v2" />
+    </IconBase>
+  );
+}
+
+
 export function Clock(props) {
   return (
     <IconBase {...props}>
@@ -645,6 +657,56 @@ export function MessageSquare(props) {
   return (
     <IconBase {...props}>
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </IconBase>
+  );
+}
+
+export function Navigation(props) {
+  return (
+    <IconBase {...props}>
+      <polygon points="3 11 22 2 13 21 11 13 3 11" />
+    </IconBase>
+  );
+}
+
+export function Wifi(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+      <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+      <line x1="12" y1="20" x2="12.01" y2="20" />
+    </IconBase>
+  );
+}
+
+export function Coffee(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+      <line x1="6" y1="1" x2="6" y2="4" />
+      <line x1="10" y1="1" x2="10" y2="4" />
+      <line x1="14" y1="1" x2="14" y2="4" />
+    </IconBase>
+  );
+}
+
+export function BookOpen(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </IconBase>
+  );
+}
+
+export function Car(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.6C1.4 11.1 1 11.9 1 12.7V16c0 .6.4 1 1 1h2" />
+      <circle cx="7" cy="17" r="2" />
+      <circle cx="17" cy="17" r="2" />
     </IconBase>
   );
 }

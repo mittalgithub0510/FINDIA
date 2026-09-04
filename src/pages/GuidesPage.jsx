@@ -1,33 +1,78 @@
-import React from 'react';
-import { Users, Sparkles, ChevronLeft } from '../components/icons';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { delhiGuidesData } from '../data/delhi/guides';
+import { GuidesHero } from '../features/guides/GuidesHero';
+import { GuideCategories } from '../features/guides/GuideCategories';
+import { DiscoverGuides } from '../features/guides/DiscoverGuides';
+import { TouristZoneGuides } from '../features/guides/TouristZoneGuides';
+import { GuideDetailModal } from '../features/guides/GuideDetailModal';
+import { SmartGuideMatching } from '../features/guides/SmartGuideMatching';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export function GuidesPage() {
-  return (
-    <div className="min-h-screen bg-bg-base text-text-high flex items-center justify-center p-6">
-      <div className="max-w-lg w-full glass-heavy p-8 sm:p-10 rounded-3xl border border-white/15 text-center space-y-6 shadow-lifted">
-        <div className="w-16 h-16 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center mx-auto">
-          <Users size={32} />
-        </div>
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 text-xs font-mono font-bold uppercase tracking-wider border border-amber-500/30">
-            <Sparkles size={13} />
-            <span>Feature Preview</span>
-          </div>
-          <h1 className="type-h1 font-display font-bold">Verified Heritage Guides</h1>
-          <p className="text-sm text-text-mid leading-relaxed">
-            Connect with ASI certified historical narrators, walking tour leaders, and local storytellers for custom monument expeditions.
-          </p>
-        </div>
+  usePageMeta({
+    title: 'Local Heritage & Food Guides in Delhi | FINDIA',
+    description: 'Connect with certified ASI historians, culinary experts, street photographers, and Sufi heritage storytellers across Delhi.'
+  });
 
-        <Link
-          to="/destination/north/delhi"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-bg-base font-bold text-xs transition-colors shadow-lifted"
-        >
-          <ChevronLeft size={16} />
-          <span>Explore Live Delhi Destinations</span>
-        </Link>
-      </div>
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedZone, setSelectedZone] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGuideForModal, setSelectedGuideForModal] = useState(null);
+
+  const handleSelectZone = (zoneId) => {
+    setSelectedZone(zoneId);
+    const el = document.getElementById('discover-guides');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleHeroSearch = (query) => {
+    setSearchQuery(query);
+    const el = document.getElementById('discover-guides');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-bg-base text-[#F3EBDC]">
+      {/* 1. Hero Section: Find Your Local Guide */}
+      <GuidesHero onSearch={handleHeroSearch} />
+
+      {/* 2. Guide Categories: Heritage, Food, Culture, Photography, History, Shopping */}
+      <GuideCategories
+        categories={delhiGuidesData.categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
+
+      {/* 3. Discover Guides: Guide cards, Language, Expertise, Experience, Area, Price */}
+      <DiscoverGuides
+        guides={delhiGuidesData.guides}
+        selectedCategory={selectedCategory}
+        selectedZone={selectedZone}
+        onSelectZoneChange={setSelectedZone}
+        searchQuery={searchQuery}
+        onSelectGuide={setSelectedGuideForModal}
+      />
+
+      {/* 4. Explore by Tourist Zone */}
+      <TouristZoneGuides
+        zones={delhiGuidesData.zones}
+        onSelectZone={handleSelectZone}
+      />
+
+      {/* 5. Future FINDIA AI: Smart Guide Matching */}
+      <SmartGuideMatching guides={delhiGuidesData.guides} />
+
+      {/* 6. Guide Profile / Details Modal */}
+      {selectedGuideForModal && (
+        <GuideDetailModal
+          guide={selectedGuideForModal}
+          onClose={() => setSelectedGuideForModal(null)}
+        />
+      )}
     </div>
   );
 }
