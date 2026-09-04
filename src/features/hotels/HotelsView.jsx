@@ -69,27 +69,29 @@ export function HotelsView() {
   return (
     <div className="space-y-3 sm:space-y-3.5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[10px] pb-6">
       {/* Compact Feature Header Banner */}
-      <div className="p-3.5 sm:p-4 rounded-[12px] bg-[#1B1613] border border-[#2E271F] relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        {/* Left Side: Title & Dynamic Location Description */}
-        <div className="relative z-10 space-y-1 max-w-2xl">
+      <div className="p-3.5 sm:p-4.5 rounded-[12px] bg-[#1B1613] border border-[#2E271F] relative overflow-hidden">
+        <div className="relative z-10 space-y-2 max-w-3xl">
+          {/* Tags Top Row */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#C9A24B]/[0.07] text-[#C9A24B] text-[11px] font-medium border border-[#8A7238]">
+              <Sparkles size={12} />
+              <span>FINDIA location smart directory</span>
+            </div>
+            <div className="flex items-center gap-1.5 font-medium text-[#5FA97C] text-[11px] bg-[#5FA97C]/10 border border-[#5FA97C]/30 px-2.5 py-0.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5FA97C] animate-pulse" />
+              <span>{filteredHotels.length} verified properties</span>
+            </div>
+          </div>
+
+          {/* Heading */}
           <h1 className="text-xl sm:text-2xl font-medium font-['Fraunces',serif] text-[#F3EBDC] leading-tight">
             {cityName} hotels & heritage stays
           </h1>
-          <p className="text-xs text-[#9C9186] leading-relaxed">
-            Discover curated stays in {cityName}, strategically located near iconic tourist attractions, heritage sites, and major transit hubs.
-          </p>
-        </div>
 
-        {/* Right Side: FINDIA & Dynamic Verified Property Count Tags */}
-        <div className="flex flex-col sm:items-end gap-1.5 shrink-0 relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#C9A24B]/[0.07] text-[#C9A24B] text-[11px] font-medium border border-[#8A7238]">
-            <Sparkles size={12} />
-            <span>FINDIA location directory</span>
-          </div>
-          <div className="flex items-center gap-1.5 font-medium text-[#5FA97C] text-[11px] bg-[#5FA97C]/10 border border-[#5FA97C]/30 px-2.5 py-0.5 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#5FA97C] animate-pulse" />
-            <span>{filteredHotels.length} verified properties in {cityName}</span>
-          </div>
+          {/* Description */}
+          <p className="text-xs text-[#9C9186] leading-relaxed">
+            Discover verified accommodations strategically situated near key location tourist attractions, transit hubs, and metro lines. Filtered for budget, transit, and luxury travelers.
+          </p>
         </div>
       </div>
 
@@ -108,7 +110,7 @@ export function HotelsView() {
         totalResults={filteredHotels.length}
       />
 
-      {/* Hotel Cards Grid: Minimum 3 cards per row on laptop (md:grid-cols-3) */}
+      {/* Hotel Cards Grid */}
       {filteredHotels.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-3.5 pt-1">
           {filteredHotels.map((hotel) => (
