@@ -19,7 +19,7 @@ export function HotelDetailModal({ hotel, onClose }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#17130F] rounded-[16px] border border-[#2E271F] shadow-2xl text-[#F3EBDC] flex flex-col justify-between">
         
-        {/* Modal Main Padding Container */}
+        {/* Modal Main Content Container */}
         <div className="p-6 sm:p-8 space-y-6">
           {/* Close Button Top Right */}
           <button
@@ -45,7 +45,7 @@ export function HotelDetailModal({ hotel, onClose }) {
               )}
             </div>
 
-            {/* 2. Hotel Name & Address */}
+            {/* 2. Hotel Name & Address Line */}
             <h2 className="text-2xl sm:text-3xl font-medium font-['Fraunces',serif] text-[#F3EBDC] leading-snug">
               {hotel.name}
             </h2>
@@ -75,7 +75,7 @@ export function HotelDetailModal({ hotel, onClose }) {
             </div>
           </div>
 
-          {/* 4. About this stay (Descriptive paragraph in bordered box) */}
+          {/* 4. About this stay Section */}
           <div className="space-y-2">
             <h4 className="text-xs font-medium text-[#C9A24B]">About this stay</h4>
             <p className="text-xs sm:text-sm text-[#D9CFC0] leading-relaxed bg-[#1B1613] p-4 sm:p-5 rounded-xl border border-[#2E271F]">
@@ -152,27 +152,27 @@ export function HotelDetailModal({ hotel, onClose }) {
           )}
         </div>
 
-        {/* 9. Footer Bar: Blue Hotel Link Button & Blue Direction Link Button */}
+        {/* 9. Footer Bar: Subtle Pill Buttons with Gold Tint Hover */}
         <div className="px-6 sm:px-8 py-4 bg-[#13100C] border-t border-[#2E271F] rounded-b-[16px] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <span className="text-[#9C9186]">Verified data source</span>
           <div className="flex items-center gap-3 flex-wrap">
-            {/* Hotel Link Button (Vibrant Blue) */}
+            {/* Official Site Button */}
             <a
               href={officialLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 rounded-full bg-[#1B1613] border border-[#2E271F] hover:border-[#8A7238] hover:bg-[#C9A24B]/10 text-[#F3EBDC] font-medium text-xs transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <span>🏨 Official hotel site</span>
+              <span>🏨 Official site</span>
             </a>
-            {/* Direction Link Button (Vibrant Blue) */}
+            {/* Direction / Tourism Board Button */}
             <a
               href={directionLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 rounded-full bg-[#1B1613] border border-[#2E271F] hover:border-[#8A7238] hover:bg-[#C9A24B]/10 text-[#F3EBDC] font-medium text-xs transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <span>📍 Get directions</span>
+              <span>🗺️ Tourism board</span>
             </a>
           </div>
         </div>
