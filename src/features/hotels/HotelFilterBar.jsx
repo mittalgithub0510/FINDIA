@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, ChevronDown, Check, Filter } from '../../components/icons';
+import { Search, ChevronDown, Check } from '../../components/icons';
 
 function CustomDropdown({ value, options, onChange, icon: Icon }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -126,7 +126,7 @@ export function HotelFilterBar({
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9C9186]" />
           <input
             type="text"
-            placeholder="Search hotel name, area, or attraction (e.g. Humayun's Tomb, CP, Aerocity)..."
+            placeholder="Search hotel name, area, or attraction..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#1B1613] border border-[#322A22] text-xs text-[#F3EBDC] placeholder:text-[#9C9186] focus:outline-none focus:border-[#C9A24B]/60 transition-all"
@@ -154,7 +154,7 @@ export function HotelFilterBar({
 
       {/* Results Counter */}
       <div className="flex items-center justify-between text-xs text-[#9C9186] pt-1">
-        <span>Showing <strong className="text-[#F3EBDC] font-semibold">{totalResults}</strong> verified Delhi hotels</span>
+        <span>Showing <strong className="text-[#F3EBDC] font-semibold">{totalResults}</strong> verified hotels</span>
         <span className="text-[10px] font-mono text-[#9C9186]">Updated SIH 2026 dataset</span>
       </div>
     </div>
