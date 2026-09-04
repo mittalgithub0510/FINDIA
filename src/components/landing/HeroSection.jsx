@@ -171,12 +171,12 @@ export function HeroSection() {
             </p>
           </div>
 
-          {/* Right Column (4 cols): Compact Transparent DEMO TELEMETRY SNAPSHOT Card */}
+          {/* Right Column (4 cols): Fully Transparent Glassmorphic DEMO TELEMETRY SNAPSHOT Card */}
           <div className="lg:col-span-4">
             <div
-              className="p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-glass space-y-2 backdrop-blur-md bg-black/45 opacity-85 hover:opacity-100 transition-opacity max-w-xs sm:max-w-[340px] mx-auto lg:ml-auto"
+              className="p-3 sm:p-3.5 rounded-2xl border border-white/20 shadow-glass space-y-2 backdrop-blur-xl bg-black/25 hover:bg-black/35 transition-all max-w-xs sm:max-w-[340px] mx-auto lg:ml-auto"
             >
-              <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+              <div className="flex items-center justify-between border-b border-white/15 pb-1.5">
                 <div className="flex items-center gap-1.5">
                   <span className="text-amber-400 font-mono text-xs">◉</span>
                   <span className="text-[10px] uppercase font-mono font-bold text-amber-300 tracking-wider">
@@ -187,7 +187,7 @@ export function HeroSection() {
               </div>
 
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between p-1.5 rounded-xl bg-black/50 border border-white/10 text-xs">
+                <div className="flex items-center justify-between p-1.5 rounded-xl bg-white/5 border border-white/15 text-xs backdrop-blur-sm">
                   <div>
                     <div className="font-bold text-text-high text-xs">Agrasen Ki Baoli</div>
                     <div className="text-[9px] text-emerald-300 font-mono">0 min line</div>
@@ -197,7 +197,7 @@ export function HeroSection() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-1.5 rounded-xl bg-black/50 border border-white/10 text-xs">
+                <div className="flex items-center justify-between p-1.5 rounded-xl bg-white/5 border border-white/15 text-xs backdrop-blur-sm">
                   <div>
                     <div className="font-bold text-text-high text-xs">Humayun&apos;s Tomb</div>
                     <div className="text-[9px] text-emerald-300 font-mono">Garden spaces open</div>
@@ -207,7 +207,7 @@ export function HeroSection() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-1.5 rounded-xl bg-black/50 border border-amber-500/30 text-xs">
+                <div className="flex items-center justify-between p-1.5 rounded-xl bg-white/5 border border-amber-500/40 text-xs backdrop-blur-sm">
                   <div>
                     <div className="font-bold text-amber-200 text-xs">Qutub Minar</div>
                     <div className="text-[9px] text-amber-400 font-mono">45 min queue</div>
@@ -219,7 +219,7 @@ export function HeroSection() {
               </div>
 
               {/* Conceptual Demand Redistribution Recommendation */}
-              <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-0.5">
+              <div className="p-2 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs space-y-0.5 backdrop-blur-sm">
                 <div className="font-bold text-amber-300 font-mono flex items-center gap-1 text-[9px]">
                   <CheckCircle2 size={11} className="text-emerald-400" />
                   <span>FINDIA Recommendation</span>
