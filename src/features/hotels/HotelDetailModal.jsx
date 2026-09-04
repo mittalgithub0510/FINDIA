@@ -55,15 +55,7 @@ export function HotelDetailModal({ hotel, onClose }) {
             </div>
           </div>
 
-          {/* 3. About this stay (Paragraph BEFORE stat grid) */}
-          <div className="space-y-2">
-            <h4 className="text-xs font-medium text-[#C9A24B]">About this stay</h4>
-            <p className="text-xs sm:text-sm text-[#D9CFC0] leading-relaxed bg-[#1B1613] p-4 sm:p-5 rounded-xl border border-[#2E271F]">
-              {hotel.description}
-            </p>
-          </div>
-
-          {/* 4. 4-Column Stat Grid with Vertical Dividers */}
+          {/* 3. 4-Column Stat Grid with Vertical Dividers */}
           <div className="bg-[#1B1613] border border-[#2E271F] rounded-xl overflow-hidden grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#241F19] text-center p-1">
             <div className="p-3.5">
               <span className="text-[11px] text-[#9C9186] block">Approx. price</span>
@@ -81,6 +73,14 @@ export function HotelDetailModal({ hotel, onClose }) {
               <span className="text-[11px] text-[#9C9186] block">Value score</span>
               <span className="text-xs sm:text-sm font-semibold text-[#5FA97C] block mt-0.5">{hotel.valueScore ? `${hotel.valueScore}/10` : 'Verified'}</span>
             </div>
+          </div>
+
+          {/* 4. About this stay (Descriptive paragraph in bordered box) */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-medium text-[#C9A24B]">About this stay</h4>
+            <p className="text-xs sm:text-sm text-[#D9CFC0] leading-relaxed bg-[#1B1613] p-4 sm:p-5 rounded-xl border border-[#2E271F]">
+              {hotel.description}
+            </p>
           </div>
 
           {/* 5. Tourist Suitability Recommendation Callout */}

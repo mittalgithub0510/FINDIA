@@ -11,7 +11,7 @@ export function HotelCard({ hotel, onSelect }) {
   return (
     <div className="bg-[#1B1613] border border-[#2E271F] rounded-[14px] p-5 flex flex-col justify-between space-y-4 hover:border-[#8A7238] transition-colors duration-200 group">
       <div className="space-y-3.5">
-        {/* 1. Top Row: Tier Badge (pill with gold outline) + Rating & Review Count */}
+        {/* 1. Top Row: Tier Badge (gold outline pill) + Rating & Review Count */}
         <div className="flex items-center justify-between gap-2">
           <span className="px-3 py-0.5 rounded-full border border-[#8A7238] text-[#C9A24B] text-xs font-medium bg-[#C9A24B]/[0.07]">
             {categoryLabel}
