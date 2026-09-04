@@ -22,7 +22,7 @@ function CustomDropdown({ value, options, onChange, icon: Icon }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-3.5 py-2.5 rounded-xl bg-[#1B1613] border border-[#322A22] hover:border-[#C9A24B]/50 text-xs text-[#F3EBDC] flex items-center justify-between transition-all cursor-pointer font-medium"
+        className="w-full px-3.5 py-2 rounded-xl bg-[#1B1613] border border-[#322A22] hover:border-[#C9A24B]/50 text-xs text-[#F3EBDC] flex items-center justify-between transition-all cursor-pointer font-medium"
       >
         <span className="truncate flex items-center gap-2">
           {Icon && <Icon size={14} className="text-[#9C9186]" />}
@@ -91,16 +91,16 @@ export function HotelFilterBar({
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2.5">
       {/* Category Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
         {categories.map((cat) => {
           const isActive = selectedCategory === cat.id;
           return (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-medium transition-all shrink-0 flex items-center gap-2 border cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 flex items-center gap-1.5 border cursor-pointer ${
                 isActive
                   ? 'bg-[#C9A24B] text-[#0F0D0B] border-[#C9A24B] font-semibold shadow-sm'
                   : 'bg-[#1B1613] text-[#9C9186] border-[#322A22] hover:border-[#C9A24B]/40 hover:text-[#F3EBDC]'
@@ -108,7 +108,7 @@ export function HotelFilterBar({
             >
               <span>{cat.label}</span>
               <span
-                className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                   isActive ? 'bg-[#0F0D0B]/20 text-[#0F0D0B]' : 'bg-[#241E1A] text-[#9C9186]'
                 }`}
               >
@@ -120,7 +120,7 @@ export function HotelFilterBar({
       </div>
 
       {/* Search & Secondary Custom Dropdowns */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 relative z-20">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 relative z-20">
         {/* Search Bar */}
         <div className="sm:col-span-6 relative">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9C9186]" />
@@ -129,7 +129,7 @@ export function HotelFilterBar({
             placeholder="Search hotel name, area, or attraction..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#1B1613] border border-[#322A22] text-xs text-[#F3EBDC] placeholder:text-[#9C9186] focus:outline-none focus:border-[#C9A24B]/60 transition-all"
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#1B1613] border border-[#322A22] text-xs text-[#F3EBDC] placeholder:text-[#9C9186] focus:outline-none focus:border-[#C9A24B]/60 transition-all"
           />
         </div>
 
@@ -152,10 +152,10 @@ export function HotelFilterBar({
         </div>
       </div>
 
-      {/* Results Counter */}
-      <div className="flex items-center justify-between text-xs text-[#9C9186] pt-1">
+      {/* Results Counter (Clean without SIH label) */}
+      <div className="flex items-center justify-between text-xs text-[#9C9186] px-0.5 pt-0.5">
         <span>Showing <strong className="text-[#F3EBDC] font-semibold">{totalResults}</strong> verified hotels</span>
-        <span className="text-[10px] font-mono text-[#9C9186]">Updated SIH 2026 dataset</span>
+        <span className="text-[11px] text-[#5FA97C] font-medium">Verified directory</span>
       </div>
     </div>
   );
