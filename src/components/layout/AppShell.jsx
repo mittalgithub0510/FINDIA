@@ -48,8 +48,15 @@ export function AppShell({ children, transparentNavbarAtTop = false, className =
         onOpenSOS={() => setSosModalOpen(true)}
       />
 
-      {/* 4. Main Content Landmark */}
-      <main id="main-content" tabIndex={-1} className="flex-1 flex flex-col outline-none">
+      {/* 4. Main Content Landmark (Automatically applies top offset when navbar is fixed solid) */}
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className={cn(
+          'flex-1 flex flex-col outline-none',
+          !transparentNavbarAtTop && 'pt-20 sm:pt-24'
+        )}
+      >
         {children}
       </main>
 
@@ -58,14 +65,6 @@ export function AppShell({ children, transparentNavbarAtTop = false, className =
 
       {/* 6. Floating Action Layer (z-[40]) */}
       <div className="pointer-events-auto">
-        {/* Floating SOS Emergency Trigger & Modal Sheet (hidden on /sos to prevent collision) */}
-        {!isSosRoute && (
-          <SOSButton
-            isOpen={sosModalOpen}
-            onToggle={(open) => setSosModalOpen(open)}
-          />
-        )}
-
         {/* Floating AI Crowd Assistant Widget & Panel (z-[40] & z-[60]) */}
         <CrowdAssistant />
       </div>

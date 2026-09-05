@@ -7,18 +7,20 @@ import { RouteLoadingFallback } from './components/layout/RouteLoadingFallback';
 
 // Lazy-loaded page components
 const LandingPage = lazy(() => import('./pages/LandingPage'));
-const PlacesPage = lazy(() => import('./pages/PlacesPage'));
-const PlaceDetailPage = lazy(() => import('./pages/PlaceDetailPage'));
-const HiddenGemsPage = lazy(() => import('./pages/HiddenGemsPage'));
-const ItineraryPlannerPage = lazy(() => import('./pages/ItineraryPlannerPage'));
+const DelhiPage = lazy(() => import('./features/destination-delhi/DelhiPage'));
+const PlaceDetailView = lazy(() => import('./features/destination-delhi/PlaceDetailView'));
+const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'));
+const HotelsPage = lazy(() => import('./pages/HotelsPage'));
+const TransportPage = lazy(() => import('./pages/TransportPage'));
+const GuidesPage = lazy(() => import('./pages/GuidesPage'));
 const CommunityPage = lazy(() => import('./pages/CommunityPage'));
 const ThreadDetailPage = lazy(() => import('./pages/ThreadDetailPage'));
-const TravelTogetherPage = lazy(() => import('./pages/TravelTogetherPage'));
-const SafetyPage = lazy(() => import('./pages/SafetyPage'));
-const DistrictPage = lazy(() => import('./pages/DistrictPage'));
+const FindiaAIPage = lazy(() => import('./pages/FindiaAIPage'));
+const SOSPage = lazy(() => import('./pages/SOSPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const HiddenGemsPage = lazy(() => import('./pages/HiddenGemsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-const DevSandboxPage = lazy(() => import('./pages/DevSandboxPage'));
 
 /**
  * Root Application Router with Lazy Loading, Suspense Skeletons,
@@ -34,30 +36,35 @@ export default function App() {
       <AppShell transparentNavbarAtTop={isLandingPage}>
         <Suspense fallback={<RouteLoadingFallback />}>
           <Routes>
-            {/* Primary Routes */}
+            {/* Primary Navigation Routes */}
             <Route path="/" element={<LandingPage />} />
-            <Route path="/places" element={<PlacesPage />} />
-            <Route path="/places/:slug" element={<PlaceDetailPage />} />
-            <Route path="/hidden-gems" element={<HiddenGemsPage />} />
-            <Route path="/plan" element={<ItineraryPlannerPage />} />
+
+            {/* Destination Routes */}
+            <Route path="/destination/north/delhi" element={<DelhiPage />} />
+            <Route path="/destinations/delhi" element={<DelhiPage />} />
+            <Route path="/destination/north/delhi/:placeSlug" element={<PlaceDetailView />} />
+            <Route path="/destination/coming-soon" element={<ComingSoonPage />} />
+
+            {/* Other Navbar Routes */}
+            <Route path="/hotels" element={<HotelsPage />} />
+            <Route path="/transport" element={<TransportPage />} />
+            <Route path="/guides" element={<GuidesPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/:threadId" element={<ThreadDetailPage />} />
-            <Route path="/travel-together" element={<TravelTogetherPage />} />
-            <Route path="/sos" element={<SafetyPage />} />
-            <Route path="/districts/:slug" element={<DistrictPage />} />
+            <Route path="/findia-ai" element={<FindiaAIPage />} />
+            <Route path="/sos" element={<SOSPage />} />
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Auxiliary Routes */}
+            <Route path="/places" element={<Navigate to="/destination/north/delhi" replace />} />
+            <Route path="/places/:slug" element={<PlaceDetailView />} />
+            <Route path="/hidden-gems" element={<HiddenGemsPage />} />
             <Route path="/about" element={<AboutPage />} />
 
-            {/* Backwards-compatibility aliases */}
-            <Route path="/itinerary" element={<Navigate to="/plan" replace />} />
+            {/* Backwards-compatibility Aliases */}
+            <Route path="/plan" element={<Navigate to="/findia-ai" replace />} />
+            <Route path="/itinerary" element={<Navigate to="/findia-ai" replace />} />
             <Route path="/safety-sos" element={<Navigate to="/sos" replace />} />
-
-            {/* Dev-only audit routes (gated behind import.meta.env.DEV) */}
-            {import.meta.env.DEV && (
-              <>
-                <Route path="/sandbox" element={<DevSandboxPage />} />
-                <Route path="/tokens" element={<DevSandboxPage />} />
-              </>
-            )}
 
             {/* Catch-all 404 Route */}
             <Route path="*" element={<NotFoundPage />} />

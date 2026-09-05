@@ -2,81 +2,74 @@ import React from 'react';
 import { PageWrapper } from '../components/layout/PageWrapper';
 import {
   HeroSection,
-  CapabilitiesSection,
-  FeaturedPlacesSection,
+  IndiaDiversitySection,
+  ExploreIndiaSection,
+  DemandRedistributionSection,
+  HowFindiaThinksSection,
   HiddenGemsSection,
-  PlanPreviewSection,
-  CommunityBandSection,
-  DistrictsGridSection,
-  SafetyBandSection,
-  CityTeaserSection,
+  CommunityPreviewSection,
+  FindiaAiShowcaseSection,
+  EcosystemSection,
+  GovernmentIntelligenceSection,
+  EmotionalIndiaSection,
+  FinalCtaSection,
 } from '../components/landing';
-import { useInView } from '../hooks/useInView';
-import { cn } from '../utils/cn';
 
 /**
- * FINDIA Landing Page.
- *
- * NON-NEGOTIABLE ARCHITECTURAL RULES SATISFIED:
- * 1. Content Separation: Zero hardcoded arrays; all data flows from src/data/delhi/landing.js.
- * 2. Layout Alternation: Alternates between full-bleed hero, offset staggered tiles,
- *    asymmetric grid, numbered editorial list, split planner band, reversed community band,
- *    asymmetric 11-district grid, tight safety band, and single-line teaser.
- * 3. Banned Copy: Strictly zero marketing fluff or AI poetry.
- * 4. Fact-Checked: Concrete timings, metro lines, entry fees, and inconvenient ground truths.
- * 5. Optical Rhythm: Architectural sections breathe; community & safety bands tighten.
- *
- * @page
+ * FINDIA Homepage Component (V2 Specification — SIH 2026 PS 26204)
+ * 
+ * Continuous Narrative Flow:
+ * 1. SECTION 1 — HERO (Brand, Tagline, AI Intelligence, Destination Search, Delhi Live MVP)
+ * 2. SECTION 2 — INDIA DIVERSITY (Scale & Diversity visual categories)
+ * 3. SECTION 3 — EXPLORE INDIA (Interactive Region Selector driven by DESTINATIONS_CONFIG)
+ * 4. SECTION 4 — CORE USP (Tourism Demand Redistribution & Contextual Decision Scenario)
+ * 5. SECTION 5 — HOW FINDIA THINKS (Decision Engine Pipeline & 9 processed signals)
+ * 6. SECTION 6 — INDIA BEYOND THE FAMOUS (Hidden Gems & local discovery)
+ * 7. SECTION 7 — COMMUNITY PREVIEW (Ground reports & verification)
+ * 8. SECTION 8 — FINDIA AI (Context-aware Tourism Decision Engine showcase)
+ * 9. SECTION 9 — TOURISM ECOSYSTEM (Transport, Audio, SOS, Community, Stays, Telemetry)
+ * 10. SECTION 10 — GOVERNMENT INTELLIGENCE PREVIEW (Aggregated signals with Demo Intelligence badge)
+ * 11. SECTION 11 — EMOTIONAL INDIA (Cinematic brand story)
+ * 12. SECTION 12 — FINAL CTA (Your Journey Starts Here)
  */
 export function LandingPage() {
-  // Motion discipline: Apply restrained fade-and-rise to at most two sections
-  const [capabilitiesRef, capabilitiesInView] = useInView({ threshold: 0.1 });
-  const [placesRef, placesInView] = useInView({ threshold: 0.1 });
-
   return (
     <PageWrapper hasHero className="pt-0">
-      {/* 1. HERO SECTION (Full-bleed 92vh, golden hour photo, greeting, search, live crowd card) */}
+      {/* 1. HERO SECTION */}
       <HeroSection />
 
-      {/* 2. WHAT THIS IS (4 Offset capability tiles, non-uniform arrangement) */}
-      <div
-        ref={capabilitiesRef}
-        className={cn(
-          'transition-all duration-700 ease-out',
-          capabilitiesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 motion-reduce:opacity-100 motion-reduce:translate-y-0'
-        )}
-      >
-        <CapabilitiesSection />
-      </div>
+      {/* 2. INDIA DIVERSITY */}
+      <IndiaDiversitySection />
 
-      {/* 3. PLACES (Asymmetric grid: 2x2 Feature card + 4 supporting cards / mobile snap rail) */}
-      <div
-        ref={placesRef}
-        className={cn(
-          'transition-all duration-700 ease-out',
-          placesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 motion-reduce:opacity-100 motion-reduce:translate-y-0'
-        )}
-      >
-        <FeaturedPlacesSection />
-      </div>
+      {/* 3. EXPLORE INDIA BY REGION */}
+      <ExploreIndiaSection />
 
-      {/* 4. HIDDEN SITES (Numbered list 01–05, desktop clipped hover photo reveal, inconvenient truths) */}
+      {/* 4. CORE USP — TOURISM DEMAND REDISTRIBUTION */}
+      <DemandRedistributionSection />
+
+      {/* 5. HOW FINDIA THINKS */}
+      <HowFindiaThinksSection />
+
+      {/* 6. INDIA BEYOND THE FAMOUS */}
       <HiddenGemsSection />
 
-      {/* 5. PLAN YOUR DAY (Wide split band with realistic generated itinerary timeline preview) */}
-      <PlanPreviewSection />
+      {/* 7. COMMUNITY PREVIEW */}
+      <CommunityPreviewSection />
 
-      {/* 6. COMMUNITY + TRAVEL TOGETHER (Reversed split band with tighter vertical rhythm) */}
-      <CommunityBandSection />
+      {/* 8. FINDIA AI DECISION ENGINE SHOWCASE */}
+      <FindiaAiShowcaseSection />
 
-      {/* 7. DISTRICTS (Asymmetric 11-district municipal grid with New Delhi & Central emphasis) */}
-      <DistrictsGridSection />
+      {/* 9. TOURISM ECOSYSTEM */}
+      <EcosystemSection />
 
-      {/* 8. SAFETY BAND (Tight padding, restrained SOS-tinted surface with direct dial links) */}
-      <SafetyBandSection />
+      {/* 10. GOVERNMENT INTELLIGENCE PREVIEW */}
+      <GovernmentIntelligenceSection />
 
-      {/* 9. CITY FOOTER TEASER (Single quiet line before footer with zero headings) */}
-      <CityTeaserSection />
+      {/* 11. EMOTIONAL INDIA */}
+      <EmotionalIndiaSection />
+
+      {/* 12. FINAL CTA */}
+      <FinalCtaSection />
     </PageWrapper>
   );
 }

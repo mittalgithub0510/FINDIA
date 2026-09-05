@@ -88,6 +88,81 @@ export function ArrowRight(props) {
   );
 }
 
+export function ArrowUp(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </IconBase>
+  );
+}
+
+export function ArrowDown(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 5v14M19 12l-7 7-7-7" />
+    </IconBase>
+  );
+}
+
+export function Flame(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z" />
+    </IconBase>
+  );
+}
+
+export function Award(props) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="8" r="6" />
+      <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+    </IconBase>
+  );
+}
+
+export function ThumbsUp(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M7 10v12M15 5.88L14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88z" />
+    </IconBase>
+  );
+}
+
+export function ThumbsDown(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M17 14V2M9 18.12L10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h0a3.13 3.13 0 0 1-3-3.88z" />
+    </IconBase>
+  );
+}
+
+export function HelpCircle(props) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </IconBase>
+  );
+}
+
+export function Activity(props) {
+  return (
+    <IconBase {...props}>
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+    </IconBase>
+  );
+}
+
+export function Star(props) {
+  return (
+    <IconBase {...props}>
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </IconBase>
+  );
+}
+
 export function ArrowUpRight(props) {
   return (
     <IconBase {...props}>
@@ -301,6 +376,9 @@ export function Sparkle(props) {
   );
 }
 
+export const Sparkles = Sparkle;
+
+
 export function MessageCircle(props) {
   return (
     <IconBase {...props}>
@@ -423,4 +501,197 @@ export function Radio(props) {
     </IconBase>
   );
 }
+
+export function Hospital(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 6v12M6 12h12" strokeWidth="2.5" />
+      <rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="1.5" />
+    </IconBase>
+  );
+}
+
+export function Building(props) {
+  return (
+    <IconBase {...props}>
+      <rect x="4" y="2" width="16" height="20" rx="2" />
+      <line x1="9" y1="6" x2="9" y2="6.01" />
+      <line x1="15" y1="6" x2="15" y2="6.01" />
+      <line x1="9" y1="10" x2="9" y2="10.01" />
+      <line x1="15" y1="10" x2="15" y2="10.01" />
+      <line x1="9" y1="14" x2="9" y2="14.01" />
+      <line x1="15" y1="14" x2="15" y2="14.01" />
+      <path d="M10 22v-4h4v4" />
+    </IconBase>
+  );
+}
+
+
+export function Wrench(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+    </IconBase>
+  );
+}
+
+export function Fuel(props) {
+  return (
+    <IconBase {...props}>
+      <line x1="3" y1="22" x2="15" y2="22" />
+      <path d="M4 9h10M4 4h10v18H4z" />
+      <path d="M14 9l2.5-2.5a2 2 0 0 1 2.8 0l.7.7a2 2 0 0 1 0 2.8L18 12.5V17" />
+    </IconBase>
+  );
+}
+
+export function Layers(props) {
+  return (
+    <IconBase {...props}>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </IconBase>
+  );
+}
+
+export function Landmark(props) {
+  return (
+    <IconBase {...props}>
+      <line x1="3" y1="22" x2="21" y2="22" />
+      <line x1="6" y1="18" x2="6" y2="11" />
+      <line x1="10" y1="18" x2="10" y2="11" />
+      <line x1="14" y1="18" x2="14" y2="11" />
+      <line x1="18" y1="18" x2="18" y2="11" />
+      <polygon points="12 2 20 7 4 7 12 2" />
+    </IconBase>
+  );
+}
+
+export function Utensils(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M18 2v20M21 15V2a5 5 0 0 0-5 5v8h5zM3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20" />
+    </IconBase>
+  );
+}
+
+export function ShoppingBag(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </IconBase>
+  );
+}
+
+export function User(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </IconBase>
+  );
+}
+
+export function Lock(props) {
+  return (
+    <IconBase {...props}>
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </IconBase>
+  );
+}
+
+export function Mail(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </IconBase>
+  );
+}
+
+export function ChevronLeft(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M15 18l-6-6 6-6" />
+    </IconBase>
+  );
+}
+
+export function CheckCircle2(props) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9 12l2 2 4-4" />
+    </IconBase>
+  );
+}
+
+export function CheckCircle(props) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9 12l2 2 4-4" />
+    </IconBase>
+  );
+}
+
+export function MessageSquare(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </IconBase>
+  );
+}
+
+export function X(props) {
+  return <Close {...props} />;
+}
+
+export function Navigation(props) {
+  return (
+    <IconBase {...props}>
+      <polygon points="3 11 22 2 13 21 11 13 3 11" />
+    </IconBase>
+  );
+}
+
+export function Wifi(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+      <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+      <line x1="12" y1="20" x2="12.01" y2="20" />
+    </IconBase>
+  );
+}
+
+export function Coffee(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+      <line x1="6" y1="1" x2="6" y2="4" />
+      <line x1="10" y1="1" x2="10" y2="4" />
+      <line x1="14" y1="1" x2="14" y2="4" />
+    </IconBase>
+  );
+}
+
+export function Car(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.6C1.4 11.1 1 11.9 1 12.7V16c0 .6.4 1 1 1h2" />
+      <circle cx="7" cy="17" r="2" />
+      <circle cx="17" cy="17" r="2" />
+    </IconBase>
+  );
+}
+
+
+
 
