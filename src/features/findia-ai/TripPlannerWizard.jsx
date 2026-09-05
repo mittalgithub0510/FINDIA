@@ -7,60 +7,95 @@ import {
   Clock,
   Compass,
   Utensils,
-  Car,
   Metro,
   ChevronLeft,
   ChevronRight,
   Check,
-  CheckCircle2,
   Flame,
 } from '../../components/icons';
 import { cn } from '../../utils/cn';
 
 const POPULAR_DESTINATIONS = [
-  { id: 'Delhi', label: 'Delhi', tag: 'Live Crowd Active', desc: 'Monuments, Bazaars & Metro', active: true },
-  { id: 'Jaipur', label: 'Jaipur', tag: 'Pink City', desc: 'Amber Fort & Hawa Mahal' },
-  { id: 'Agra', label: 'Agra', tag: 'Mughal Heritage', desc: 'Taj Mahal & Agra Fort' },
-  { id: 'Varanasi', label: 'Varanasi', tag: 'Spiritual Ghats', desc: 'Ganga Aarti & Ancient Lanes' },
-  { id: 'Goa', label: 'Goa', tag: 'Coast & Chill', desc: 'Beaches, Forts & Cafes' },
-  { id: 'Manali', label: 'Manali / Himachal', tag: 'Mountains', desc: 'Valleys & Snow Passes' },
+  { id: 'Delhi', label: 'Delhi (NCT)', tag: 'Live Active', desc: 'Monuments, Bazaars & Metro', active: true, state: 'Delhi' },
+  { id: 'Prayagraj', label: 'Prayagraj (UP)', tag: 'Live Active', desc: 'Triveni Sangam, Fort & Ghats', active: true, state: 'Uttar Pradesh' },
+  { id: 'Jaipur', label: 'Jaipur (RJ)', tag: 'Pink City', desc: 'Amber Fort & Hawa Mahal', state: 'Rajasthan' },
+  { id: 'Varanasi', label: 'Varanasi (UP)', tag: 'Spiritual Ghats', desc: 'Ganga Aarti & Ancient Lanes', state: 'Uttar Pradesh' },
+  { id: 'Agra', label: 'Agra (UP)', tag: 'Mughal Heritage', desc: 'Taj Mahal & Agra Fort', state: 'Uttar Pradesh' },
+  { id: 'Goa', label: 'Goa', tag: 'Coast & Chill', desc: 'Beaches, Forts & Cafes', state: 'Goa' },
 ];
 
-const QUICK_PRESETS = [
-  {
-    id: 'heritage_3d',
-    title: '3-Day Classic Delhi Heritage',
-    desc: 'Red Fort, Qutub, Humayun’s Tomb + Sunder Nursery',
-    days: 3,
-    groupType: 'couple',
-    travelersCount: 2,
-    vibe: ['heritage', 'nature'],
-    budget: 'moderate',
-    dietary: 'all',
-  },
-  {
-    id: 'foodie_weekend',
-    title: '2-Day Old Delhi Foodie Crawl',
-    desc: 'Chandni Chowk parathas, Karim’s, Majnu Ka Tilla',
-    days: 2,
-    groupType: 'friends',
-    travelersCount: 4,
-    vibe: ['foodie', 'shopping'],
-    budget: 'budget',
-    dietary: 'streetfood',
-  },
-  {
-    id: 'relaxed_solo',
-    title: '1-Day Calm Solo Exploration',
-    desc: 'Agrasen ki Baoli, Lodhi Art District, Sunder Nursery',
-    days: 1,
-    groupType: 'solo',
-    travelersCount: 1,
-    vibe: ['relaxed', 'hidden_gems'],
-    budget: 'budget',
-    dietary: 'veg',
-  },
-];
+const QUICK_PRESETS_BY_CITY = {
+  Delhi: [
+    {
+      id: 'delhi_heritage_3d',
+      title: '3-Day Classic Delhi Heritage',
+      desc: 'Red Fort, Qutub, Humayun’s Tomb + Sunder Nursery',
+      days: 3,
+      groupType: 'couple',
+      travelersCount: 2,
+      vibe: ['heritage', 'nature'],
+      budget: 'moderate',
+      dietary: 'all',
+    },
+    {
+      id: 'delhi_foodie_weekend',
+      title: '2-Day Old Delhi Foodie Crawl',
+      desc: 'Chandni Chowk parathas, Karim’s, Majnu Ka Tilla',
+      days: 2,
+      groupType: 'friends',
+      travelersCount: 4,
+      vibe: ['foodie', 'shopping'],
+      budget: 'budget',
+      dietary: 'streetfood',
+    },
+    {
+      id: 'delhi_relaxed_solo',
+      title: '1-Day Calm Solo Exploration',
+      desc: 'Agrasen ki Baoli, Lodhi Art District, Sunder Nursery',
+      days: 1,
+      groupType: 'solo',
+      travelersCount: 1,
+      vibe: ['relaxed', 'hidden_gems'],
+      budget: 'budget',
+      dietary: 'veg',
+    },
+  ],
+  Prayagraj: [
+    {
+      id: 'prayagraj_sangam_3d',
+      title: '3-Day Holy Sangam & Grand Heritage',
+      desc: 'Triveni Sangam boat, Bade Hanuman Ji, Akbar Fort, Anand Bhavan',
+      days: 3,
+      groupType: 'family',
+      travelersCount: 4,
+      vibe: ['heritage', 'nature'],
+      budget: 'moderate',
+      dietary: 'veg',
+    },
+    {
+      id: 'prayagraj_spiritual_1d',
+      title: '1-Day Spiritual Ghats & Netram Kachori',
+      desc: 'Sunrise boat dip, Lete Hanuman Ji, Netram jalebi & Chowk',
+      days: 1,
+      groupType: 'solo',
+      travelersCount: 1,
+      vibe: ['relaxed', 'foodie'],
+      budget: 'budget',
+      dietary: 'streetfood',
+    },
+    {
+      id: 'prayagraj_culture_2d',
+      title: '2-Day Anand Bhavan, Literature & Food',
+      desc: 'Alfred Park, All Saints Cathedral, Civil Lines & Raja Ram Lassi',
+      days: 2,
+      groupType: 'couple',
+      travelersCount: 2,
+      vibe: ['heritage', 'foodie'],
+      budget: 'moderate',
+      dietary: 'all',
+    },
+  ],
+};
 
 const VIBE_OPTIONS = [
   {
@@ -146,12 +181,24 @@ const DIETARY_OPTIONS = [
   { id: 'streetfood', label: 'Street Food Fanatic', icon: '🌶️', desc: 'Must-visit iconic food lanes' },
 ];
 
-export function TripPlannerWizard({ onGenerate, isGenerating }) {
+export function TripPlannerWizard({
+  onGenerate,
+  isGenerating,
+  initialDestination = 'Delhi',
+  initialSpecialRequest = '',
+}) {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
 
+  const normalizedInitial =
+    initialDestination &&
+    (initialDestination.toLowerCase().includes('prayagraj') ||
+      initialDestination.toLowerCase().includes('allahabad'))
+      ? 'Prayagraj'
+      : initialDestination || 'Delhi';
+
   // Form State
-  const [destination, setDestination] = useState('Delhi');
+  const [destination, setDestination] = useState(normalizedInitial);
   const [customDestination, setCustomDestination] = useState('');
   const [days, setDays] = useState(3);
   const [groupType, setGroupType] = useState('couple');
@@ -159,12 +206,29 @@ export function TripPlannerWizard({ onGenerate, isGenerating }) {
   const [selectedVibes, setSelectedVibes] = useState(['heritage', 'foodie']);
   const [budget, setBudget] = useState('moderate');
   const [dietary, setDietary] = useState('all');
-  const [transit, setTransit] = useState('metro');
+  const [transit, setTransit] = useState(normalizedInitial === 'Prayagraj' ? 'e_rickshaw' : 'metro');
   const [earlyStart, setEarlyStart] = useState(true);
   const [accessible, setAccessible] = useState(false);
-  const [specialRequest, setSpecialRequest] = useState('');
+  const [specialRequest, setSpecialRequest] = useState(initialSpecialRequest || '');
 
   const activeDestination = customDestination.trim() || destination;
+  const isPrayagraj =
+    activeDestination.toLowerCase().includes('prayagraj') ||
+    activeDestination.toLowerCase().includes('allahabad');
+
+  const activePresets = isPrayagraj
+    ? QUICK_PRESETS_BY_CITY.Prayagraj
+    : QUICK_PRESETS_BY_CITY.Delhi;
+
+  const handleSelectCity = (cityId) => {
+    setDestination(cityId);
+    setCustomDestination('');
+    if (cityId === 'Prayagraj') {
+      setTransit('e_rickshaw');
+    } else if (cityId === 'Delhi') {
+      setTransit('metro');
+    }
+  };
 
   const toggleVibe = (id) => {
     setSelectedVibes((prev) => {
@@ -209,14 +273,101 @@ export function TripPlannerWizard({ onGenerate, isGenerating }) {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
-      {/* 1-Click Fast Presets */}
+      {/* 🌟 1. State / Live City Focus Selector */}
+      <div className="p-4 sm:p-6 rounded-3xl bg-bg-surface/90 border border-white/15 shadow-lifted backdrop-blur-md space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            </span>
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-300">
+              Select City / State to Inquire (Kahan Ghumna Chahte Hain?)
+            </span>
+          </div>
+          <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+            Real-Time Crowd Telemetry Active
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {/* Delhi Option */}
+          <button
+            type="button"
+            onClick={() => handleSelectCity('Delhi')}
+            className={cn(
+              'p-4 rounded-2xl text-left border transition-all cursor-pointer relative overflow-hidden group',
+              destination === 'Delhi' && !customDestination
+                ? 'bg-amber-500/20 border-amber-400 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/50'
+                : 'bg-bg-raised/60 border-white/10 hover:border-white/25 hover:bg-bg-raised'
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="text-2xl">🏛️</span>
+                <div>
+                  <div className="font-display font-bold text-base text-text-high group-hover:text-amber-300 transition-colors">
+                    Delhi (NCT)
+                  </div>
+                  <div className="text-[11px] text-text-mid font-medium">National Capital Region</div>
+                </div>
+              </div>
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                ● Live Active
+              </span>
+            </div>
+            <p className="text-xs text-text-low mt-2 leading-relaxed">
+              Mughal monuments, Red Fort, Chandni Chowk street food & precise Delhi Metro line routes.
+            </p>
+          </button>
+
+          {/* Prayagraj Option */}
+          <button
+            type="button"
+            onClick={() => handleSelectCity('Prayagraj')}
+            className={cn(
+              'p-4 rounded-2xl text-left border transition-all cursor-pointer relative overflow-hidden group',
+              destination === 'Prayagraj' && !customDestination
+                ? 'bg-amber-500/20 border-amber-400 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/50'
+                : 'bg-bg-raised/60 border-white/10 hover:border-white/25 hover:bg-bg-raised'
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="text-2xl">🕉️</span>
+                <div>
+                  <div className="font-display font-bold text-base text-text-high group-hover:text-amber-300 transition-colors">
+                    Prayagraj (UP)
+                  </div>
+                  <div className="text-[11px] text-text-mid font-medium">Uttar Pradesh • The Holy Sangam</div>
+                </div>
+              </div>
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                ● Live Active
+              </span>
+            </div>
+            <p className="text-xs text-text-low mt-2 leading-relaxed">
+              Triveni Sangam boats, Lete Hanuman Ji, Akbar Fort, Anand Bhavan, Netram Kachori & Raja Ram Lassi.
+            </p>
+          </button>
+        </div>
+      </div>
+
+      {/* 🌟 2. 1-Click Fast Presets (Dynamically tailored to active city) */}
       <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 backdrop-blur-md">
-        <div className="flex items-center gap-2 mb-3 text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
-          <Sparkle size={14} className="animate-pulse" />
-          <span>Quick 1-Click Itinerary Presets</span>
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+            <Sparkle size={14} className="animate-pulse" />
+            <span>
+              {isPrayagraj ? 'Prayagraj 1-Click Curated Presets' : 'Delhi 1-Click Curated Presets'}
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-text-mid">
+            Tap any preset to auto-configure
+          </span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {QUICK_PRESETS.map((p) => (
+          {activePresets.map((p) => (
             <button
               key={p.id}
               type="button"
@@ -548,14 +699,23 @@ export function TripPlannerWizard({ onGenerate, isGenerating }) {
               <div className="space-y-2">
                 <label className="text-xs uppercase font-mono tracking-wider text-text-high font-semibold flex items-center gap-1.5">
                   <Metro size={14} className="text-amber-400" />
-                  <span>Commute Preference</span>
+                  <span>
+                    {isPrayagraj ? 'Commute in Prayagraj' : 'Commute Preference'}
+                  </span>
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { id: 'metro', label: 'Delhi Metro', sub: 'Fast & Cheap' },
-                    { id: 'cab', label: 'Cab / Auto', sub: 'Direct Pickup' },
-                    { id: 'mixed', label: 'Mixed', sub: 'Metro + Auto' },
-                  ].map((t) => (
+                  {(isPrayagraj
+                    ? [
+                        { id: 'e_rickshaw', label: 'Eco E-Rickshaw', sub: 'Flat ₹10-20 Citywide' },
+                        { id: 'boat_auto', label: 'Sangam Boat + Auto', sub: 'Ghats & Riverfront' },
+                        { id: 'cab', label: 'Cab / Private Auto', sub: 'Direct Comfort' },
+                      ]
+                    : [
+                        { id: 'metro', label: 'Delhi Metro', sub: 'Fast & Cheap' },
+                        { id: 'cab', label: 'Cab / Auto', sub: 'Direct Pickup' },
+                        { id: 'mixed', label: 'Mixed', sub: 'Metro + Auto' },
+                      ]
+                  ).map((t) => (
                     <button
                       key={t.id}
                       type="button"
@@ -563,12 +723,12 @@ export function TripPlannerWizard({ onGenerate, isGenerating }) {
                       className={cn(
                         'p-2.5 rounded-xl text-center border text-xs font-semibold transition-all cursor-pointer',
                         transit === t.id
-                          ? 'bg-amber-500/20 border-amber-400 text-amber-300'
+                          ? 'bg-amber-500/20 border-amber-400 text-amber-300 ring-1 ring-amber-400/40'
                           : 'bg-bg-surface/60 border-white/10 text-text-mid hover:border-white/20'
                       )}
                     >
-                      <div>{t.label}</div>
-                      <div className="text-[10px] text-text-low font-normal">{t.sub}</div>
+                      <div className="font-bold">{t.label}</div>
+                      <div className="text-[10px] text-text-low font-normal mt-0.5">{t.sub}</div>
                     </button>
                   ))}
                 </div>
@@ -589,7 +749,7 @@ export function TripPlannerWizard({ onGenerate, isGenerating }) {
                       className="accent-amber-400 w-4 h-4 rounded cursor-pointer"
                     />
                     <span className="text-xs text-text-high">
-                      Early morning starts (7:30 AM) to beat crowd & heat
+                      Early morning starts (6:00/7:30 AM) to beat crowd & heat
                     </span>
                   </label>
                   <label className="flex items-center gap-2 p-2.5 rounded-xl bg-bg-surface/60 border border-white/10 cursor-pointer hover:border-white/20">
@@ -614,7 +774,11 @@ export function TripPlannerWizard({ onGenerate, isGenerating }) {
               </label>
               <textarea
                 rows="2"
-                placeholder="e.g. Qutub Minar at sunset dekhna hai, Chandni Chowk paratha wali gali jaana hai, Dilli Haat shopping..."
+                placeholder={
+                  isPrayagraj
+                    ? 'e.g. Triveni Sangam mein sunrise boat ride karni hai, Netram ki kachori khani hai, Lete Hanuman Ji darshan, Anand Bhavan & Khusro Bagh...'
+                    : 'e.g. Qutub Minar at sunset dekhna hai, Chandni Chowk paratha wali gali jaana hai, Dilli Haat shopping...'
+                }
                 value={specialRequest}
                 onChange={(e) => setSpecialRequest(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl bg-bg-surface/80 border border-white/15 text-sm text-text-high placeholder-text-low focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400 transition-all resize-none"

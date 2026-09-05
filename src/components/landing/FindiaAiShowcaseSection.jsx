@@ -67,6 +67,29 @@ const AI_PRESET_SCENARIOS = [
     },
     redistributionNote: 'Selected locations with elevators, shade, and metro accessibility to ensure maximum family comfort.',
   },
+  {
+    id: 'prayagraj_sangam',
+    chipLabel: '⛵ Prayagraj Sangam & Heritage (2 Days)',
+    promptText: 'I have 2 days in Prayagraj, ₹4,500 budget, sunrise boat at Triveni Sangam & historic Raj-era landmarks.',
+    day1: {
+      title: 'Day 1 • Sacred Confluence & Akbari Fort',
+      spots: [
+        { name: 'Sunrise: Triveni Sangam Boat Ride', detail: '6:00 AM • Wooden boat from Kila Ghat • Confluence holy dip • Fee: ₹150' },
+        { name: 'Morning: Lete Bade Hanuman Ji', detail: '8:30 AM • Subterranean reclining shrine darshan • Zero midday rush' },
+        { name: 'Culinary Brunch: Netram Halwai', detail: '11:00 AM • Authentic 1854 Hing Kachori & Desi Ghee Jalebi at Katra' },
+        { name: 'Afternoon: Emperor Akbar Fort', detail: '3:00 PM • Yamuna riverfront bastion & Patalpuri Temple' },
+      ],
+    },
+    day2: {
+      title: 'Day 2 • Freedom Movement & Colonial Splendor',
+      spots: [
+        { name: 'Morning: Anand Bhavan & Planetarium', detail: '9:30 AM • Nehru family ancestral home & memorabilia' },
+        { name: 'Midday: Chandra Shekhar Azad Park', detail: '1:00 PM • 133-acre lush colonial park & Allahabad Museum' },
+        { name: 'Sunset: All Saints Gothic Cathedral', detail: '4:30 PM • 1871 British Victorian stained glass architecture' },
+      ],
+    },
+    redistributionNote: 'Scheduled Sangam boat ride at dawn to avoid peak boat queues, and sequenced Loknath street food during off-peak morning hours.',
+  },
 ];
 
 /**

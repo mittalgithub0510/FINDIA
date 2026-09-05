@@ -7,6 +7,7 @@ import { AudioGuide } from './AudioGuide';
 import { NearbyPlaces } from './NearbyPlaces';
 import { TransportComparison } from './TransportComparison';
 import { PlanMyDayCTA } from './PlanMyDayCTA';
+import { PlaceCrowdTelemetryCard } from '../../../components/common/PlaceCrowdTelemetryCard';
 import {
   ChevronLeft,
   MapPin,
@@ -124,7 +125,10 @@ export function PlaceDetails({ place, theme }) {
       {/* 2. Hero Visual: Single Large heroImage with Overlaid "About This Place" Text */}
       <ImageGallery place={place} theme={theme} />
 
-      {/* 3. Quick Information Cards & Facilities */}
+      {/* 3. Live Crowd Telemetry & Hourly Popular Times Histogram */}
+      <PlaceCrowdTelemetryCard place={place} city="delhi" />
+
+      {/* 4. Quick Information Cards & Facilities */}
       <div className="space-y-6">
         <QuickInfoCard place={place} />
         <FacilityCard place={place} />

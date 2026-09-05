@@ -4,6 +4,7 @@
  */
 
 import delhiSOSData from './delhi/sos';
+import prayagrajSOSData from './prayagraj/sos';
 
 export const SOS_CATEGORIES = [
   { id: 'hospital', label: 'Hospital', icon: 'Hospital' },
@@ -15,6 +16,7 @@ export const SOS_CATEGORIES = [
 
 const CITY_SOS_MAP = {
   delhi: delhiSOSData,
+  prayagraj: prayagrajSOSData,
 };
 
 /**

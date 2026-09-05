@@ -1,0 +1,83 @@
+/**
+ * Verified Local Tour Guides for Prayagraj
+ */
+
+export const prayagrajGuidesData = {
+  categories: [
+    { id: 'all', label: 'All Guides' },
+    { id: 'heritage', label: 'Heritage & Spiritual' },
+    { id: 'boat', label: 'Sangam & River Navigators' },
+    { id: 'food', label: 'Culinary & Street Food' },
+    { id: 'photography', label: 'Kumbh & Photo Walks' },
+  ],
+  zones: [
+    { id: 'all', label: 'All Zones' },
+    { id: 'sangam', label: 'Sangam & Daraganj' },
+    { id: 'civil-lines', label: 'Civil Lines' },
+    { id: 'chowk', label: 'Chowk & Old City' },
+  ],
+  guides: [
+    {
+      id: 'pry-gd-1',
+      name: 'Pandit Rameshwar Shukla',
+      category: 'heritage',
+      zone: 'sangam',
+      rating: 4.9,
+      reviewCount: 310,
+      languages: ['Hindi', 'English', 'Sanskrit'],
+      experienceYears: 18,
+      specialty: 'Vedic Rituals, Sangam Snan Etiquette & Akbar Fort History',
+      hourlyRate: '₹600/hr',
+      bio: 'Lifelong resident of Daraganj and certified heritage storyteller with encyclopedic knowledge of Prayag Mahatmya scriptures and Mughal fort architecture.',
+      verifiedASI: true,
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 'pry-gd-2',
+      name: 'Capt. Shiv Mohan Nishad',
+      category: 'boat',
+      zone: 'sangam',
+      rating: 4.8,
+      reviewCount: 245,
+      languages: ['Hindi', 'Bhojpuri'],
+      experienceYears: 22,
+      specialty: 'Traditional Wooden Boat Confluence Tours & Bird Watching',
+      hourlyRate: '₹400/hr',
+      bio: 'Fourth-generation Mallah boat navigator on the Yamuna and Ganga. Expert at navigating changing seasonal currents and spotting winter migratory Siberian gulls.',
+      verifiedASI: false,
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 'pry-gd-3',
+      name: 'Aanya Srivastava',
+      category: 'food',
+      zone: 'chowk',
+      rating: 4.9,
+      reviewCount: 190,
+      languages: ['English', 'Hindi'],
+      experienceYears: 7,
+      specialty: 'Old Chowk Food Walk, 1854 Netram Kachori & Loknath Sweets',
+      hourlyRate: '₹750/hr',
+      bio: 'Culinary researcher and former journalist passionate about Prayagraj’s historic sweetmakers, Awadhi flavors, and forgotten royal confectionery traditions.',
+      verifiedASI: true,
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 'pry-gd-4',
+      name: 'Vikramaditya Sen',
+      category: 'photography',
+      zone: 'civil-lines',
+      rating: 4.7,
+      reviewCount: 160,
+      languages: ['English', 'Hindi', 'Bengali'],
+      experienceYears: 10,
+      specialty: 'Sunrise Sangam Golden Hour, Sadhu Portraits & Colonial Monuments',
+      hourlyRate: '₹900/hr',
+      bio: 'Documentary photographer published in national magazines. Conducts morning photowalks capturing the ethereal mists of the Sangam and Gothic stone facades.',
+      verifiedASI: true,
+      image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+    },
+  ],
+};
+
+export default prayagrajGuidesData;

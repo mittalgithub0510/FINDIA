@@ -2,20 +2,16 @@ import React, { useState, useMemo } from 'react';
 import {
   Sparkle,
   Calendar,
-  Clock,
   MapPin,
   Metro,
   Utensils,
-  Ticket,
   Copy,
   Check,
   Printer,
   RotateCcw,
   Users,
-  Compass,
   Flame,
   ChevronRight,
-  Shield,
   MessageCircle,
   Star,
 } from '../../components/icons';
@@ -52,7 +48,7 @@ export function ItineraryResultView({
     text += `📍 Destination: ${plan.destination} | 🗓️ Duration: ${plan.duration} Days\n`;
     text += `👥 Travelers: ${plan.groupDescription || userPreferences?.travelersCount + ' people'}\n`;
     text += `💰 Estimated Budget: ${plan.estimatedBudgetTotal || '₹2,500/day'}\n`;
-    text += `🚇 Transit: ${plan.transitHighlight || 'Delhi Metro'}\n\n`;
+    text += `🚖 Transit: ${plan.transitHighlight || 'Local Transit'}\n\n`;
     text += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
     days.forEach((d) => {
@@ -61,7 +57,7 @@ export function ItineraryResultView({
 
       if (d.morning) {
         text += `🌅 *Morning (${d.morning.time}):* ${d.morning.place}\n`;
-        text += `   🚇 Metro: ${d.morning.metro}\n`;
+        text += `   🚇 Transit: ${d.morning.metro}\n`;
         text += `   🎟️ Fee: ${d.morning.fee} | Crowd: ${d.morning.crowdLevel}\n`;
         text += `   💡 Tip: ${d.morning.tip}\n\n`;
       }
@@ -74,13 +70,13 @@ export function ItineraryResultView({
 
       if (d.afternoon) {
         text += `🏛️ *Afternoon (${d.afternoon.time}):* ${d.afternoon.place}\n`;
-        text += `   🚇 Metro: ${d.afternoon.metro}\n`;
+        text += `   🚇 Transit: ${d.afternoon.metro}\n`;
         text += `   💡 Tip: ${d.afternoon.tip}\n\n`;
       }
 
       if (d.evening) {
         text += `🌇 *Evening (${d.evening.time}):* ${d.evening.place}\n`;
-        text += `   🚇 Metro: ${d.evening.metro}\n`;
+        text += `   🚇 Transit: ${d.evening.metro}\n`;
         text += `   💡 Tip: ${d.evening.tip}\n\n`;
       }
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Headphones, MessageSquare, ChevronDown } from '../../../components/icons';
+import { Headphones, MessageSquare, ChevronDown, Volume2, VolumeX } from '../../../components/icons';
 import { cn } from '../../../utils/cn';
 import { getAudioGuide } from '../../../data/delhi';
 
@@ -8,7 +8,8 @@ import { getAudioGuide } from '../../../data/delhi';
  * 
  * Features:
  * - Exactly 2 language options: English and Hindi
- * - Plays real, ultra-realistic 2+ minute studio documentary audio narrations
+ * - Real ultra-realistic studio documentary audio narrations
+ * - Interactive Volume control slider (0-100%) and mute/unmute
  * - Interactive Scrubbable progress bar with real-time seeking
  * - Accurate elapsed & total duration display (mm:ss)
  * - Seamless language switching with state preservation
@@ -24,6 +25,8 @@ export function AudioGuide({ place }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(135); // default ~2m 15s
   const [showTranscript, setShowTranscript] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
 
   const audioRef = useRef(null);
 
@@ -106,6 +109,29 @@ export function AudioGuide({ place }) {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
+  // Handle volume slider
+  const handleVolumeChange = (e) => {
+    const val = parseFloat(e.target.value);
+    setVolume(val);
+    setIsMuted(val === 0);
+    if (audioRef.current) {
+      audioRef.current.volume = val;
+    }
+  };
+
+  // Toggle Mute
+  const toggleMute = () => {
+    if (isMuted) {
+      setIsMuted(false);
+      const restoredVol = volume > 0 ? volume : 0.8;
+      setVolume(restoredVol);
+      if (audioRef.current) audioRef.current.volume = restoredVol;
+    } else {
+      setIsMuted(true);
+      if (audioRef.current) audioRef.current.volume = 0;
+    }
+  };
+
   const prevSlugRef = useRef(place?.slug);
   if (prevSlugRef.current !== place?.slug) {
     prevSlugRef.current = place?.slug;
@@ -163,7 +189,7 @@ export function AudioGuide({ place }) {
           </div>
         </div>
 
-        {/* Right Controls: Exactly 2 Languages (English & Hindi) + Play Button */}
+        {/* Right Controls: Exactly 2 Languages (English & Hindi) + Volume Slider + Play Button */}
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           {/* 2 Language Option Buttons: English and Hindi */}
           <div className="flex items-center p-1 rounded-xl bg-black/40 border border-white/10 shadow-inner">
@@ -194,6 +220,36 @@ export function AudioGuide({ place }) {
               <span>🇮🇳</span>
               <span>हिंदी</span>
             </button>
+          </div>
+
+          {/* Volume Control Slider */}
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-text-mid">
+            <button
+              type="button"
+              onClick={toggleMute}
+              aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+              title={isMuted ? "Unmute" : "Mute"}
+              className="hover:text-amber-400 transition-colors cursor-pointer flex items-center"
+            >
+              {isMuted || volume === 0 ? (
+                <VolumeX size={16} className="text-red-400" />
+              ) : (
+                <Volume2 size={16} className="text-amber-400" />
+              )}
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={isMuted ? 0 : volume}
+              onChange={handleVolumeChange}
+              aria-label="Volume slider"
+              className="w-16 sm:w-20 h-1.5 accent-amber-400 bg-white/20 rounded-lg cursor-pointer"
+            />
+            <span className="text-[10px] font-mono text-text-low w-7 text-right">
+              {isMuted ? '0%' : `${Math.round(volume * 100)}%`}
+            </span>
           </div>
 
           {/* Primary Play / Pause Button */}

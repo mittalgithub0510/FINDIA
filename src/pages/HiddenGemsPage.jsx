@@ -3,7 +3,8 @@ import { useCity } from '../config/CityContext';
 import { PageHeader } from '../components/layout/PageHeader';
 import { Container } from '../components/layout/Container';
 import { ComingSoonNote } from '../components/layout/ComingSoonNote';
-import { hiddenGems } from '../data/delhi/hiddenGems';
+import { hiddenGems as delhiHiddenGems } from '../data/delhi/hiddenGems';
+import { hiddenGems as prayagrajHiddenGems } from '../data/prayagraj/hiddenGems';
 import { MapPin, Clock, AlertTriangle } from '../components/icons';
 import { usePageMeta } from '../hooks/usePageMeta';
 
@@ -15,9 +16,11 @@ import { usePageMeta } from '../hooks/usePageMeta';
  */
 export function HiddenGemsPage() {
   const { city } = useCity();
+  const activeGems = city?.slug === 'prayagraj' ? prayagrajHiddenGems : delhiHiddenGems;
+
   usePageMeta(
-    `Lesser-Known Ruins & Secret Stepwells in ${city.name}`,
-    `Audited register of forgotten stepwells, hunting lodges, and ruined fortresses off the conventional tourist trail in ${city.name}.`
+    `Lesser-Known Ruins & Secret Sites in ${city.name}`,
+    `Audited register of forgotten temples, mounds, and ruined fortresses off the conventional tourist trail in ${city.name}.`
   );
 
   return (
@@ -25,8 +28,8 @@ export function HiddenGemsPage() {
       {/* 1. Typographic Surface Header */}
       <PageHeader
         overline={`Off the Beaten Path • ${city.name}`}
-        title="Lesser-Known Stepwells & Ancient Ruins"
-        description={`Unrecorded water systems, fourteenth-century hunting lodges, and fortification ramparts across ${city.name} that receive minimal daily visitors.`}
+        title={`Lesser-Known Sanctuaries & Ancient Sites in ${city.name}`}
+        description={`Unrecorded river islands, ancient mounds, and secluded shrines across ${city.name} that receive minimal daily visitors.`}
       />
 
       <Container size="wide" className="pt-8 space-y-10">
@@ -38,7 +41,7 @@ export function HiddenGemsPage() {
 
         {/* 2. Full-Page Editorial Layout (Alternating Large Editorial Blocks) */}
         <div className="space-y-12">
-          {hiddenGems.map((gem, index) => {
+          {activeGems.map((gem, index) => {
             const isEven = index % 2 === 0;
 
             return (

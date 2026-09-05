@@ -18,6 +18,13 @@ export const ROUTES = [
     navGroup: 'primary',
   },
   {
+    path: '/destination/north/prayagraj',
+    name: 'Destination (Prayagraj)',
+    title: 'Prayagraj Destinations & Triveni Sangam',
+    description: 'Explore sacred confluence ghats, Akbar’s fort, colonial monuments, and 1854 food in Prayagraj, UP.',
+    navGroup: 'primary',
+  },
+  {
     path: '/hotels',
     name: 'Hotels',
     title: 'Hotels & Stays',

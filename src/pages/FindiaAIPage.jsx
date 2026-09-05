@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Sparkle, Route, Compass, Shield } from '../components/icons';
 import { TripPlannerWizard } from '../features/findia-ai/TripPlannerWizard';
 import { ItineraryResultView } from '../features/findia-ai/ItineraryResultView';
 import { generateAITripPlan } from '../features/findia-ai/aiPlannerService';
 import { usePageMeta } from '../hooks/usePageMeta';
 
-const LOADING_MESSAGES = [
+const DELHI_LOADING_MESSAGES = [
   'Analyzing real-time monument crowd congestion patterns...',
   'Sequencing attractions around low-traffic Delhi Metro routes...',
   'Handpicking iconic local eateries matching your diet...',
@@ -13,39 +14,76 @@ const LOADING_MESSAGES = [
   'Finalizing day-by-day timestamps and crowd advisories...',
 ];
 
+const PRAYAGRAJ_LOADING_MESSAGES = [
+  'Calculating Triveni Sangam wooden boat timings and calm sunrise slots...',
+  'Checking Lete Hanuman Ji & Akbar Fort crowd telemetry...',
+  'Handpicking legendary Prayagraj eateries: Netram Kachori & Raja Ram Lassi...',
+  'Mapping smooth E-rickshaw routes across Civil Lines, Katra & Ghats...',
+  'Finalizing day-by-day timestamps, boat guides & crowd advisories...',
+];
+
 export function FindiaAIPage() {
   usePageMeta(
     'FINDIA AI — Smart Crowd-Aware Travel & Itinerary Planner',
-    'Generate customized multi-day itineraries across India sequenced around low crowd density, Delhi Metro transit, and authentic food.'
+    'Generate customized multi-day itineraries across Delhi & Prayagraj sequenced around low crowd density, transit intelligence, and authentic food.'
   );
 
-  const [currentPlan, setCurrentPlan] = useState(null);
+  const [searchParams] = useSearchParams();
+  const cityParam = searchParams.get('city');
+  const destinationParam = searchParams.get('destination');
+
+  // Determine initial destination from URL query params (e.g. from Prayagraj place CTA)
+  const isPrayagrajParam =
+    cityParam?.toLowerCase() === 'prayagraj' ||
+    destinationParam?.toLowerCase().includes('prayagraj') ||
+    destinationParam?.toLowerCase().includes('sangam') ||
+    destinationParam?.toLowerCase().includes('anand-bhavan');
+
+  const initialDestination = isPrayagrajParam ? 'Prayagraj' : destinationParam || 'Delhi';
+  const initialSpecialRequest =
+    destinationParam && !['delhi', 'prayagraj'].includes(destinationParam.toLowerCase())
+      ? `Must visit ${destinationParam.replace(/-/g, ' ')}`
+      : '';
+
+  const [currentPlan, setCurrentPlan] = useState(() => {
+    if (cityParam || destinationParam) return null;
+    try {
+      const saved = sessionStorage.getItem('findia_last_plan');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [isGenerating, setIsGenerating] = useState(false);
-  const [userPreferences, setUserPreferences] = useState(null);
+  const [userPreferences, setUserPreferences] = useState(() => {
+    if (cityParam || destinationParam) return null;
+    try {
+      const savedPrefs = sessionStorage.getItem('findia_last_prefs');
+      return savedPrefs ? JSON.parse(savedPrefs) : null;
+    } catch {
+      return null;
+    }
+  });
   const [loadingStepIndex, setLoadingStepIndex] = useState(0);
+
+  const isPrayagrajActive =
+    userPreferences?.destination?.toLowerCase().includes('prayagraj') ||
+    initialDestination.toLowerCase().includes('prayagraj');
+
+  const currentLoadingMessages = isPrayagrajActive
+    ? PRAYAGRAJ_LOADING_MESSAGES
+    : DELHI_LOADING_MESSAGES;
 
   // Cycle loading messages during generation
   useEffect(() => {
     let interval;
     if (isGenerating) {
       interval = setInterval(() => {
-        setLoadingStepIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
+        setLoadingStepIndex((prev) => (prev + 1) % currentLoadingMessages.length);
       }, 1800);
     }
     return () => clearInterval(interval);
-  }, [isGenerating]);
-
-  // Load saved plan from sessionStorage on initial load if present
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('findia_last_plan');
-      const savedPrefs = sessionStorage.getItem('findia_last_prefs');
-      if (saved) setCurrentPlan(JSON.parse(saved));
-      if (savedPrefs) setUserPreferences(JSON.parse(savedPrefs));
-    } catch {
-      // Ignore storage read errors
-    }
-  }, []);
+  }, [isGenerating, currentLoadingMessages.length]);
 
   const handleGenerate = async (preferences) => {
     setIsGenerating(true);
@@ -138,7 +176,7 @@ export function FindiaAIPage() {
                 Designing Your Tailored Itinerary
               </h3>
               <p className="text-xs sm:text-sm text-amber-300 font-mono transition-all duration-300">
-                {LOADING_MESSAGES[loadingStepIndex]}
+                {currentLoadingMessages[loadingStepIndex]}
               </p>
             </div>
 
@@ -150,7 +188,13 @@ export function FindiaAIPage() {
 
         {/* DISPLAY WIZARD OR GENERATED PLAN */}
         {!isGenerating && !currentPlan && (
-          <TripPlannerWizard onGenerate={handleGenerate} isGenerating={isGenerating} />
+          <TripPlannerWizard
+            key={`${initialDestination}-${initialSpecialRequest}`}
+            onGenerate={handleGenerate}
+            isGenerating={isGenerating}
+            initialDestination={initialDestination}
+            initialSpecialRequest={initialSpecialRequest}
+          />
         )}
 
         {!isGenerating && currentPlan && (

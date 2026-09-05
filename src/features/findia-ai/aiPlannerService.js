@@ -17,13 +17,17 @@ const GROQ_MODELS = ['openai/gpt-oss-120b', 'groq/compound', 'openai/gpt-oss-20b
  */
 const SYSTEM_PROMPT = `
 You are FINDIA AI — India's leading crowd-aware urban navigation and intelligent travel planner.
-Your goal is to build realistic, culturally rich, crowd-optimized day-by-day itineraries across Indian cities (especially Delhi and popular regions).
+Your goal is to build realistic, culturally rich, crowd-optimized day-by-day itineraries across Indian cities, with specialized in-depth intelligence for Delhi (NCT) and Prayagraj (Uttar Pradesh).
 
 CRITICAL PLANNING PRINCIPLES:
 1. CROWD TELEMETRY: Sequence monuments to avoid peak hours. Place popular monuments early morning (7:00-9:30 AM) or late afternoon. Never schedule crowded open-air sites in midday heat.
-2. TRANSIT INTELLIGENCE: Group geographically close attractions. Specify exact Metro stations and lines (e.g. Yellow Line, Violet Line, Blue Line) so travelers avoid cross-city zig-zagging in traffic.
-3. CULINARY EXCELLENCE: Provide authentic, specific local food recommendations (iconic eateries and must-try dishes matching dietary preferences).
-4. ACCURACY: Include realistic entrance ticket fees (in ₹ INR), operating days (e.g., Red Fort & Akshardham closed Mondays, Lotus Temple closed Mondays), and walking considerations.
+2. CITY-SPECIFIC TRANSIT INTELLIGENCE:
+   - For Delhi: Group geographically close attractions. Specify exact Delhi Metro stations and lines (e.g. Yellow Line, Violet Line, Blue Line) to prevent cross-city traffic delays.
+   - For Prayagraj: Specify eco E-Rickshaws (flat ₹10-20), government-authorized wooden boats for Triveni Sangam, shared tempos, and proximity to railway stations (Prayagraj Junction PRYJ, Subedarganj, Prayag).
+3. CULINARY EXCELLENCE:
+   - For Delhi: Chandni Chowk parathas, Karim's korma, Haldiram's, Hauz Khas cafes, Pandara Road butter chicken, Dilli Haat.
+   - For Prayagraj: Netram Mulchand & Sons (desi ghee kachori-sabzi & jalebi), Dehati Ke Rasgulle (Civil Lines), Raja Ram Lassi (Civil Lines), Loknath Gali / Sulaki Chaat (dahi batasha & palak chaat), Kamdhenu Sweets, El Chico.
+4. ACCURACY: Include realistic entrance ticket fees (in ₹ INR), operating days (e.g., Anand Bhavan closed Mondays, Red Fort closed Mondays), and walking considerations.
 5. OUTPUT FORMAT: You MUST return ONLY valid, parseable JSON matching the specified schema.
 `;
 
@@ -194,7 +198,176 @@ export function generateFallbackPlan(preferences) {
   const isBudget = preferences.budget === 'budget';
   const isLuxury = preferences.budget === 'luxury';
 
-  const dayTemplates = [
+  const isPrayagraj =
+    dest.toLowerCase().includes('prayagraj') ||
+    dest.toLowerCase().includes('allahabad') ||
+    dest.toLowerCase().includes('sangam') ||
+    dest.toLowerCase().includes('anand-bhavan') ||
+    dest.toLowerCase().includes('khusro-bagh');
+
+  // ============================================================================
+  // PRAYAGRAJ (UTTAR PRADESH) TEMPLATES
+  // ============================================================================
+  const prayagrajTemplates = [
+    {
+      dayNumber: 1,
+      dayTitle: 'Sacred Confluence & Divine Legends',
+      theme: 'Triveni Sangam Sunrise, Reclining Hanuman & Akbar’s Fort',
+      morning: {
+        time: '05:45 AM - 09:30 AM',
+        place: 'Triveni Sangam & Bade Hanuman Ji Temple',
+        metro: 'Kila Ghat / Sangam Ghat (Govt Boat & E-Rickshaw)',
+        crowdLevel: 'low',
+        fee: 'Free (Govt Shared Boat ₹60-₹80 / Private ₹450-₹600)',
+        description:
+          'Witness the confluence of the holy Ganga, Yamuna, and mythical Saraswati at sunrise. Take an authorized wooden boat into the calm waters, feed migratory Siberian gulls in season, and seek blessings at the subterranean Lete Hanuman Ji shrine.',
+        tip: 'Reach Kila Ghat before 6:30 AM for undisturbed sunrise photography and peaceful temple darshan before festival queues start.',
+      },
+      lunch: {
+        time: '12:30 PM - 02:00 PM',
+        restaurant: 'Netram Mulchand & Sons (Katra / Chowk)',
+        famousDish: 'Desi Ghee Bedmi Kachori with Hing Aloo Sabzi, Boondi Raita & Crispy Jalebi',
+        dietary: '160-Year-Old Legendary Pure Veg Institution',
+        priceRange: isBudget ? '₹120 - ₹200' : '₹250 - ₹400',
+      },
+      afternoon: {
+        time: '02:30 PM - 05:00 PM',
+        place: 'Akbar’s Allahabad Fort & Patalpuri Temple',
+        metro: 'Bandh Road / Fort Corridor (E-Rickshaw ₹15)',
+        crowdLevel: 'moderate',
+        fee: 'Free ASI entry (Akshaya Vat section)',
+        description:
+          'Explore Emperor Akbar’s 1583 grand red-sandstone fortress overlooking the confluence. Step down into the cool subterranean Patalpuri Temple to view the immortal banyan tree (Akshaya Vat).',
+        tip: 'Carry government photo ID (Aadhaar or Passport) for security clearance at the army section.',
+      },
+      evening: {
+        time: '05:30 PM - 07:30 PM',
+        place: 'Arail Ghat Riverfront Promenade & Boat Sunset',
+        metro: 'New Yamuna Bridge corridor / Arail Ghat (Auto or Boat)',
+        crowdLevel: 'low',
+        fee: 'Free Public Ghats',
+        description:
+          'A serene, paved modern promenade on the southern Yamuna bank. Enjoy dramatic twilight views of the illuminated cable-stayed bridge and tranquil sandbank breezes.',
+        tip: 'Best spot for tranquil meditation and photography away from boat bargaining hubs.',
+      },
+      dinner: {
+        time: '08:00 PM - 10:00 PM',
+        restaurant: isLuxury ? 'El Chico Restaurant (Civil Lines)' : 'Dehati Rasgulle & Royal Tandoor (Civil Lines)',
+        vibe: 'Civil Lines heritage dining with iconic Awadhi-North Indian specialties',
+        priceRange: isBudget ? '₹200 - ₹350' : '₹600 - ₹1,400',
+      },
+      crowdProTip:
+        'Avoid visiting Bade Hanuman Ji on Tuesday or Saturday evenings when waiting times exceed 90 minutes. Early sunrise darshan is completely peaceful.',
+      transitAdvice: 'Take an E-Rickshaw to Kila Ghat (₹20), then a government-rate wooden boat to Sangam.',
+    },
+    {
+      dayNumber: 2,
+      dayTitle: 'Freedom Struggle & Victorian Grandeur',
+      theme: 'Anand Bhavan, Alfred Park, All Saints Cathedral & Street Food',
+      morning: {
+        time: '08:30 AM - 11:30 AM',
+        place: 'Anand Bhavan & Swaraj Bhavan',
+        metro: 'Tagore Town / Colonelganj (E-Rickshaw ₹15)',
+        crowdLevel: 'low',
+        fee: '₹70 (Museum) / Planetarium ₹100',
+        description:
+          'The historic neoclassical ancestral home of Motilal and Jawaharlal Nehru, which served as the brain center of India’s freedom movement. Stroll through the lush heritage gardens and vintage library rooms.',
+        tip: 'Book the 10:30 AM English/Hindi sky show at the Jawahar Planetarium; Anand Bhavan is closed on Mondays.',
+      },
+      lunch: {
+        time: '12:30 PM - 02:00 PM',
+        restaurant: 'Indian Coffee House (Civil Lines) or Kamdhenu Sweets',
+        famousDish: 'Classic Dosa & Filter Coffee / UP Royal Thali & Gulab Jamun',
+        dietary: 'Colonial Vintage Intellectual Hub & Pure Veg Delicacies',
+        priceRange: isBudget ? '₹150 - ₹250' : '₹400 - ₹700',
+      },
+      afternoon: {
+        time: '02:30 PM - 05:00 PM',
+        place: 'Chandrashekhar Azad Park (Alfred Park) & Allahabad Museum',
+        metro: 'Civil Lines / Thornhill Road',
+        crowdLevel: 'low',
+        fee: '₹5 (Park) + ₹50 (Allahabad Museum)',
+        description:
+          '133-acre verdant central park where legendary freedom fighter Chandrashekhar Azad made his heroic final stand. The Allahabad Museum on grounds exhibits Bharhut stone sculptures and Nehru’s personal letters.',
+        tip: 'The museum galleries are fully air-conditioned — an ideal educational retreat during sunny afternoon hours.',
+      },
+      evening: {
+        time: '05:30 PM - 07:30 PM',
+        place: 'All Saints Cathedral (Patthar Girja)',
+        metro: 'MG Marg, Civil Lines (Walking / E-Rickshaw)',
+        crowdLevel: 'low',
+        fee: 'Free Entry',
+        description:
+          'A majestic 13th-century style Gothic Revival cathedral designed by Sir William Emerson. Stained glass rose windows and hand-carved stone pulpit create an atmosphere of European tranquility.',
+        tip: 'Visit between 5 PM and 6 PM to hear the evening bells echo across Civil Lines.',
+      },
+      dinner: {
+        time: '08:00 PM - 10:00 PM',
+        restaurant: 'Raja Ram Lassi & Sulaki Chaat (Civil Lines / Loknath)',
+        vibe: 'Thick malai kulhad lassi paired with crispy dahi batasha and palak chaat',
+        priceRange: isBudget ? '₹150 - ₹300' : '₹400 - ₹800',
+      },
+      crowdProTip:
+        'Civil Lines MG Marg becomes pedestrian-friendly in the evening. Stroll between Patthar Girja and Subhash Chauraha for hassle-free shopping.',
+      transitAdvice: 'All Day 2 attractions are within a 2.5 km circle in Civil Lines; E-Rickshaws (₹10-15) are instantaneous.',
+    },
+    {
+      dayNumber: 3,
+      dayTitle: 'Mughal Mausoleums & Waterfront Serenity',
+      theme: 'Khusro Bagh, Yamuna Riverfront, Siberian Gulls & Bazaars',
+      morning: {
+        time: '08:00 AM - 11:30 AM',
+        place: 'Khusro Bagh Mughal Quadrangle',
+        metro: 'Near Prayagraj Junction (PRYJ) Railway Station',
+        crowdLevel: 'low',
+        fee: 'Free Entry (ASI Protected)',
+        description:
+          'A grand walled Mughal Charbagh housing the ornate red sandstone mausoleums of Prince Khusro and Princess Nithar Begum. Intricate chhatris, Persian floral inscriptions, and surrounded by famous Allahabad guava trees.',
+        tip: 'Morning 8 AM sunlight illuminates the intricate sandstone lattice carvings without a single tourist tour group in sight.',
+      },
+      lunch: {
+        time: '12:30 PM - 02:00 PM',
+        restaurant: isFoodie ? 'Hari Ram & Sons Hing Kachori (Loknath)' : 'Sagar Ratna Civil Lines',
+        famousDish: isFoodie ? 'Signature Hing Kachori with Samosa & Aloo Dum' : 'Special South Indian Thali with Butter Lassi',
+        dietary: preferences.dietary === 'veg' ? '120-Year-Old Old City Pure Veg Legacy' : 'Iconic Street Food & Multi-Cuisine',
+        priceRange: isBudget ? '₹100 - ₹200' : '₹350 - ₹650',
+      },
+      afternoon: {
+        time: '02:30 PM - 05:00 PM',
+        place: 'Katra Bazaar & Thatheri Bazaar Heritage Walk',
+        metro: 'Katra Old Core (Cycle Rickshaw ₹20)',
+        crowdLevel: 'moderate',
+        fee: 'Free Heritage Market Stroll',
+        description:
+          'Stroll through the lively student and traditional brass markets of old Prayagraj. Shop for exquisite brassware in Thatheri Bazaar, Chikan fabrics, and fresh red-spotted Allahabad guavas (surkha amrood).',
+        tip: 'Cycle rickshaws glide through these narrow historic alleys much easier than e-rickshaws or autos.',
+      },
+      evening: {
+        time: '05:30 PM - 07:30 PM',
+        place: 'Boat Club & Saraswati Ghat Evening Aarti',
+        metro: 'Yamuna Bank / Saraswati Ghat',
+        crowdLevel: 'moderate',
+        fee: 'Free Ghat Promenade',
+        description:
+          'Sit on the stone steps of Saraswati Ghat overlooking the broad Yamuna. Watch local wooden boats glide at dusk as temple bells and evening river aarti chants resonate.',
+        tip: 'Grab a warm kulhad chai at the Boat Club cafe terrace while watching the dusk reflection.',
+      },
+      dinner: {
+        time: '08:00 PM - 10:00 PM',
+        restaurant: 'Tandoori Nights / Haldiram’s Bhikharam (Civil Lines)',
+        vibe: 'Relaxed family dinner with hot rabdi-faluda and fresh jalebi sweets',
+        priceRange: isBudget ? '₹200 - ₹350' : '₹500 - ₹1,000',
+      },
+      crowdProTip:
+        'Do not take cars into Loknath Gali or Thatheri Bazaar; park at Civil Lines or the Railway Station and use cycle rickshaws.',
+      transitAdvice: 'Cycle rickshaw for Old City bazaars; E-Rickshaw for the Yamuna riverfront.',
+    },
+  ];
+
+  // ============================================================================
+  // DELHI (NCT) TEMPLATES
+  // ============================================================================
+  const delhiDayTemplates = [
     {
       dayNumber: 1,
       dayTitle: 'Old World Heritage & Legendary Bazaars',
@@ -350,22 +523,31 @@ export function generateFallbackPlan(preferences) {
     },
   ];
 
-  const selectedDays = dayTemplates.slice(0, numDays);
+  const templates = isPrayagraj ? prayagrajTemplates : delhiDayTemplates;
+  const selectedDays = templates.slice(0, numDays);
 
   const budgetEstimate = isBudget
-    ? `₹${1200 * numDays} – ₹${2000 * numDays}`
+    ? `₹${(isPrayagraj ? 800 : 1200) * numDays} – ₹${(isPrayagraj ? 1500 : 2000) * numDays}`
     : isLuxury
-      ? `₹${5500 * numDays} – ₹${9000 * numDays}`
-      : `₹${2600 * numDays} – ₹${4200 * numDays}`;
+      ? `₹${(isPrayagraj ? 3500 : 5500) * numDays} – ₹${(isPrayagraj ? 6000 : 9000) * numDays}`
+      : `₹${(isPrayagraj ? 1800 : 2600) * numDays} – ₹${(isPrayagraj ? 3000 : 4200) * numDays}`;
+
+  const transitHighlight = isPrayagraj
+    ? 'Govt-authorized Wooden Boat to Sangam + Eco E-Rickshaws (₹10-20 flat)'
+    : 'Delhi Metro Smart Cards (Yellow & Violet Lines) + E-Rickshaw hops';
+
+  const vibeSummary = isPrayagraj
+    ? `Sequenced around peaceful Sangam sunrise boat slots, Bade Hanuman Ji crowd avoidance, and authentic Prayagraj food (Netram, Raja Ram, Dehati).`
+    : `Sequenced around low-congestion morning windows, verified Metro transit, and authentic ${preferences.dietary || 'local'} cuisine.`;
 
   return {
-    tripTitle: `${numDays}-Day Curated ${dest} Crowd-Optimized Journey`,
-    destination: dest,
+    tripTitle: `${numDays}-Day Curated ${isPrayagraj ? 'Prayagraj (UP)' : dest} Crowd-Optimized Journey`,
+    destination: isPrayagraj ? 'Prayagraj' : dest,
     duration: numDays,
     groupDescription: `${travelers} traveler${travelers > 1 ? 's' : ''} (${preferences.groupType})`,
-    vibeSummary: `Sequenced around low-congestion morning windows, verified Metro transit, and authentic ${preferences.dietary || 'local'} cuisine.`,
+    vibeSummary,
     estimatedBudgetTotal: budgetEstimate,
-    transitHighlight: 'Delhi Metro Smart Cards (Yellow & Violet Lines) + E-Rickshaw hops',
+    transitHighlight,
     days: selectedDays,
   };
 }
