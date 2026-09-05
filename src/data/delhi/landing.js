@@ -9,7 +9,7 @@
 export const heroData = {
   // Editorial headline with deliberate line breaks and an authentic point of view
   headline: 'Most guidebooks point at the same three gates.\nDelhi has three hundred.',
-  subline: 'Real-time telemetry showing crowd density across 150+ monuments, stepwells, and havelis.',
+  subline: 'Real-time telemetry showing crowd density across 20+ monuments, stepwells, and havelis.',
   photoUrl: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1600&q=80',
   photoCredit: 'FINDIA Archive • ASI Central Circle',
   photoAlt: 'Humayun tomb sandstone domes against evening light',
@@ -49,7 +49,7 @@ export const heroData = {
   // Stats strip counters
   stats: [
     { target: 11, label: 'Districts mapped', suffix: '' },
-    { target: 154, label: 'Monuments audited', suffix: '+' },
+    { target: 20, label: 'Monuments audited', suffix: '+' },
     { target: 100, label: 'Live crowd sensors', suffix: '%' },
     { target: 24, label: 'SOS helpline dial', suffix: '/7' },
   ],

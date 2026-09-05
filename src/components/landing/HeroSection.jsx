@@ -416,10 +416,10 @@ export function HeroSection() {
             <div className="text-xs text-text-mid font-medium">States & UTs Vision</div>
           </div>
 
-          {/* Stat 3: 150+ (Monuments Mapped) */}
+          {/* Stat 3: 20+ (Monuments Mapped) */}
           <div className="flex flex-col items-center justify-center space-y-0.5">
             <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[#C9A24B]">
-              <AnimatedNumber target={150} suffix="+" />
+              <AnimatedNumber target={20} suffix="+" />
             </div>
             <div className="text-xs text-text-mid font-medium">Monuments Mapped</div>
           </div>

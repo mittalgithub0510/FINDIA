@@ -22,7 +22,7 @@ export function FeaturedPlacesSection() {
           overline="Telemetry Directory"
           title="Monuments Audited for Congestion"
           description="Live visitor counts paired with confirmed Delhi Metro connection lines and entry timings."
-          action={{ label: "View All 150+ Places", to: "/places" }}
+          action={{ label: "View All 20+ Monuments", to: "/places" }}
         />
 
         {/* Desktop Layout: Asymmetric 3-Column Grid */}
