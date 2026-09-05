@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useCity } from '../../config/CityContext';
-import { MOCK_CONVERSATION } from './mockConversation';
+import { useCrowdAssistant } from './useCrowdAssistant';
 import { MessageBubble } from './MessageBubble';
 import { SuggestionChips } from './SuggestionChips';
 import { Close, Sparkle, ArrowRight } from '../../components/icons';
@@ -8,15 +8,15 @@ import { cn } from '../../utils/cn';
 
 /**
  * AI Assistant interactive dialogue panel.
- * Presentational shell with seeded demo conversation and typing simulation.
+ * Wired to the Gemini LLM via useCrowdAssistant hook for live crowd-aware responses.
  *
  * @component
  */
 export function AssistantPanel({ isOpen, onClose }) {
   const { city } = useCity();
-  const [messages, setMessages] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const [inputText, setInputText] = useState('');
+  const { messages, isTyping, inputText, setInputText, sendMessage, resetConversation } =
+    useCrowdAssistant();
+
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -29,69 +29,25 @@ export function AssistantPanel({ isOpen, onClose }) {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  // When opened, seed the demo conversation one message at a time with typing indicator
+  // Reset conversation and focus input when panel opens
   useEffect(() => {
     if (isOpen) {
-      // Step 1: User message appears after short pause
-      setMessages([]);
-      setIsTyping(false);
-
-      const t1 = setTimeout(() => {
-        setMessages([MOCK_CONVERSATION[0]]);
-        setIsTyping(true);
-
-        // Step 2: Assistant typing indicator displays, then reveals reply with alternatives
-        const t2 = setTimeout(() => {
-          setIsTyping(false);
-          setMessages([MOCK_CONVERSATION[0], MOCK_CONVERSATION[1]]);
-        }, 1400);
-
-        return () => clearTimeout(t2);
-      }, 400);
-
-      // Focus input field on desktop
+      resetConversation();
       setTimeout(() => {
         if (window.innerWidth >= 768) {
           inputRef.current?.focus();
         }
       }, 100);
-
-      return () => clearTimeout(t1);
     }
-  }, [isOpen]);
+  }, [isOpen, resetConversation]);
 
   const handleSend = (e) => {
     e?.preventDefault();
-    if (!inputText.trim()) return;
-
-    // Append user input
-    const userMsg = {
-      id: `usr-${Date.now()}`,
-      sender: 'user',
-      text: inputText.trim(),
-      timestamp: 'Just now',
-    };
-    setMessages((prev) => [...prev, userMsg]);
-    setInputText('');
-
-    // Simulated short response (TODO: Connect to live endpoint)
-    setIsTyping(true);
-    setTimeout(() => {
-      setIsTyping(false);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `ast-${Date.now()}`,
-          sender: 'assistant',
-          text: `Analyzing crowd telemetry and stepwell proximity across ${city.name}... (TODO: Live AI routing will respond here)`,
-          timestamp: 'Just now',
-        },
-      ]);
-    }, 1200);
+    sendMessage();
   };
 
   const handleSelectChip = (chipText) => {
-    setInputText(chipText);
+    sendMessage(chipText);
   };
 
   if (!isOpen) return null;
@@ -157,14 +113,14 @@ export function AssistantPanel({ isOpen, onClose }) {
         <SuggestionChips onSelectChip={handleSelectChip} />
 
         <form onSubmit={handleSend} className="relative flex items-center gap-2">
-          {/* TODO: Connect input to live Supabase assistant handler */}
           <input
             ref={inputRef}
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
+            disabled={isTyping}
             placeholder={`Ask about crowds or quiet spots in ${city.name}...`}
-            className="w-full bg-bg-raised border border-border-default rounded-md px-3.5 py-2.5 text-xs text-text-high placeholder:text-text-low outline-none focus-visible:border-brand focus-visible:ring-1 focus-visible:ring-brand pr-10 transition-colors"
+            className="w-full bg-bg-raised border border-border-default rounded-md px-3.5 py-2.5 text-xs text-text-high placeholder:text-text-low outline-none focus-visible:border-brand focus-visible:ring-1 focus-visible:ring-brand pr-10 transition-colors disabled:opacity-50"
           />
 
           <button
