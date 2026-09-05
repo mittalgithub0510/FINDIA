@@ -28,7 +28,7 @@ export function ExploreIndiaSection() {
   return (
     <section className="py-20 bg-bg-raised/40 border-t border-white/5 relative">
       <Container size="wide" className="space-y-10">
-
+        
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-xl">
@@ -40,13 +40,13 @@ export function ExploreIndiaSection() {
               Explore India by Region
             </h2>
             <p className="type-body text-text-mid text-sm leading-relaxed">
-              FINDIA is built for all 36 States & UTs. Delhi is our active live MVP, while remaining states are in rollout stage.
+              FINDIA is built for all 36 States & UTs. Delhi & Uttar Pradesh (Prayagraj) are active live destinations, while remaining states are in rollout stage.
             </p>
           </div>
 
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl glass-heavy border border-emerald-500/40 text-xs font-mono text-emerald-300 shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Delhi Live Now • 35 States Coming Soon</span>
+            <span>Delhi & Prayagraj Live Now • 34 States Coming Soon</span>
           </div>
         </div>
 

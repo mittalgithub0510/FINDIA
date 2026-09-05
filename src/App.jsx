@@ -9,6 +9,8 @@ import { RouteLoadingFallback } from './components/layout/RouteLoadingFallback';
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const DelhiPage = lazy(() => import('./features/destination-delhi/DelhiPage'));
 const PlaceDetailView = lazy(() => import('./features/destination-delhi/PlaceDetailView'));
+const PrayagrajPage = lazy(() => import('./features/destination-prayagraj/PrayagrajPage'));
+const PrayagrajPlaceDetailView = lazy(() => import('./features/destination-prayagraj/PlaceDetailView'));
 const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'));
 const HotelsPage = lazy(() => import('./pages/HotelsPage'));
 const TransportPage = lazy(() => import('./pages/TransportPage'));
@@ -28,12 +30,19 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
  */
 export default function App() {
   const location = useLocation();
-  const isLandingPage = location.pathname === '/';
+  // Pages with full-bleed hero banners that extend seamlessly behind the floating glass navbar
+  const cleanPath = location.pathname.replace(/\/$/, '') || '/';
+  const hasHeroAtTop =
+    cleanPath === '/' ||
+    cleanPath === '/destination/north/delhi' ||
+    cleanPath === '/destinations/delhi' ||
+    cleanPath === '/destination/north/prayagraj' ||
+    cleanPath === '/destinations/prayagraj';
 
   return (
     <ErrorBoundary>
       <ScrollToTop />
-      <AppShell transparentNavbarAtTop={isLandingPage}>
+      <AppShell transparentNavbarAtTop={hasHeroAtTop}>
         <Suspense fallback={<RouteLoadingFallback />}>
           <Routes>
             {/* Primary Navigation Routes */}
@@ -44,6 +53,15 @@ export default function App() {
             <Route path="/destinations/delhi" element={<DelhiPage />} />
             <Route path="/destinations/delhi/:placeSlug" element={<PlaceDetailView />} />
             <Route path="/destination/north/delhi/:placeSlug" element={<PlaceDetailView />} />
+
+            {/* Prayagraj (Uttar Pradesh) Destination Routes */}
+            <Route path="/destination/north/prayagraj" element={<PrayagrajPage />} />
+            <Route path="/destinations/prayagraj" element={<PrayagrajPage />} />
+            <Route path="/destinations/prayagraj/:placeSlug" element={<PrayagrajPlaceDetailView />} />
+            <Route path="/destination/north/prayagraj/:placeSlug" element={<PrayagrajPlaceDetailView />} />
+            <Route path="/destination/north/uttar-pradesh" element={<Navigate to="/destination/north/prayagraj" replace />} />
+            <Route path="/destinations/uttar-pradesh" element={<Navigate to="/destinations/prayagraj" replace />} />
+
             <Route path="/destination/coming-soon" element={<ComingSoonPage />} />
 
             {/* Other Navbar Routes */}

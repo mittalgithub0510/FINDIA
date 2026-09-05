@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Sparkles, Search } from '../../components/icons';
 import { DELHI_HOTELS_DATA } from '../../data/delhi/hotels.js';
+import { PRAYAGRAJ_HOTELS_DATA } from '../../data/prayagraj/hotels.js';
 import { useCity } from '../../config/CityContext';
 import HotelCard from './HotelCard';
 import HotelFilterBar from './HotelFilterBar';
@@ -15,31 +16,32 @@ export function HotelsView() {
   const [selectedHotel, setSelectedHotel] = useState(null);
 
   const cityName = city?.name || 'Delhi';
+  const activeHotelsData = city?.slug === 'prayagraj' ? PRAYAGRAJ_HOTELS_DATA : DELHI_HOTELS_DATA;
 
   // Extract unique tourist zones
   const availableZones = useMemo(() => {
     const set = new Set();
-    DELHI_HOTELS_DATA.forEach((h) => {
+    activeHotelsData.forEach((h) => {
       if (h.nearbyTouristZones) {
         h.nearbyTouristZones.forEach((z) => set.add(z));
       }
     });
     return Array.from(set);
-  }, []);
+  }, [activeHotelsData]);
 
   // Compute category counts (sentence case)
   const categoryCounts = useMemo(() => {
     return [
-      { id: 'all', label: 'All hotels', count: DELHI_HOTELS_DATA.length },
-      { id: 'budget', label: 'Budget friendly (₹800–₹2.5k)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'budget').length },
-      { id: 'moderate', label: 'Mid-range (₹2.5k–₹6k)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'moderate').length },
-      { id: 'premium', label: 'Premium luxury (₹6k+)', count: DELHI_HOTELS_DATA.filter((h) => h.category === 'premium').length }
+      { id: 'all', label: 'All hotels', count: activeHotelsData.length },
+      { id: 'budget', label: 'Budget friendly (₹800–₹2.5k)', count: activeHotelsData.filter((h) => h.category === 'budget').length },
+      { id: 'moderate', label: 'Mid-range (₹2.5k–₹6k)', count: activeHotelsData.filter((h) => h.category === 'moderate').length },
+      { id: 'premium', label: 'Premium luxury (₹6k+)', count: activeHotelsData.filter((h) => h.category === 'premium').length }
     ];
-  }, []);
+  }, [activeHotelsData]);
 
   // Filter and sort dataset
   const filteredHotels = useMemo(() => {
-    return DELHI_HOTELS_DATA.filter((h) => {
+    return activeHotelsData.filter((h) => {
       // Category filter
       if (selectedCategory !== 'all' && h.category !== selectedCategory) return false;
 
@@ -64,7 +66,7 @@ export function HotelsView() {
       if (sortBy === 'valueScore') return (b.valueScore || 0) - (a.valueScore || 0);
       return (b.rating || 0) - (a.rating || 0);
     });
-  }, [searchQuery, selectedCategory, selectedZone, sortBy]);
+  }, [activeHotelsData, searchQuery, selectedCategory, selectedZone, sortBy]);
 
   return (
     <div className="space-y-3 sm:space-y-3.5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[10px] pb-6">

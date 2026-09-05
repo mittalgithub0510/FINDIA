@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useCity } from '../config/CityContext';
 import { delhiGuidesData } from '../data/delhi/guides';
+import { prayagrajGuidesData } from '../data/prayagraj/guides';
 import { GuidesHero } from '../features/guides/GuidesHero';
 import { GuideCategories } from '../features/guides/GuideCategories';
 import { DiscoverGuides } from '../features/guides/DiscoverGuides';
@@ -9,9 +11,12 @@ import { SmartGuideMatching } from '../features/guides/SmartGuideMatching';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export function GuidesPage() {
+  const { city } = useCity();
+  const guidesData = city?.slug === 'prayagraj' ? prayagrajGuidesData : delhiGuidesData;
+
   usePageMeta({
-    title: 'Local Heritage & Food Guides in Delhi | FINDIA',
-    description: 'Connect with certified ASI historians, culinary experts, street photographers, and Sufi heritage storytellers across Delhi.'
+    title: `Local Heritage & Food Guides in ${city?.name || 'Delhi'} | FINDIA`,
+    description: `Connect with certified historians, boat navigators, culinary experts, and heritage storytellers across ${city?.name || 'Delhi'}.`
   });
 
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -42,14 +47,14 @@ export function GuidesPage() {
 
       {/* 2. Guide Categories: Heritage, Food, Culture, Photography, History, Shopping */}
       <GuideCategories
-        categories={delhiGuidesData.categories}
+        categories={guidesData.categories}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
 
       {/* 3. Discover Guides: Guide cards, Language, Expertise, Experience, Area, Price */}
       <DiscoverGuides
-        guides={delhiGuidesData.guides}
+        guides={guidesData.guides}
         selectedCategory={selectedCategory}
         selectedZone={selectedZone}
         onSelectZoneChange={setSelectedZone}
@@ -59,12 +64,13 @@ export function GuidesPage() {
 
       {/* 4. Explore by Tourist Zone */}
       <TouristZoneGuides
-        zones={delhiGuidesData.zones}
+        zones={guidesData.zones}
+        selectedZone={selectedZone}
         onSelectZone={handleSelectZone}
       />
 
-      {/* 5. Future FINDIA AI: Smart Guide Matching */}
-      <SmartGuideMatching guides={delhiGuidesData.guides} />
+      {/* 5. Smart Guide Matching CTA */}
+      <SmartGuideMatching guides={guidesData.guides} />
 
       {/* 6. Guide Profile / Details Modal */}
       {selectedGuideForModal && (

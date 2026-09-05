@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCity } from '../config/CityContext';
-import { CHANNELS, INITIAL_THREADS, TOP_REPUTATION_USERS, COMMUNITY_TOURISM_SIGNALS } from '../data/delhi/community';
+import {
+  CHANNELS as DELHI_CHANNELS,
+  INITIAL_THREADS as DELHI_THREADS,
+  TOP_REPUTATION_USERS as DELHI_USERS,
+  COMMUNITY_TOURISM_SIGNALS as DELHI_SIGNALS,
+} from '../data/delhi/community';
+import {
+  CHANNELS as PRAYAGRAJ_CHANNELS,
+  INITIAL_THREADS as PRAYAGRAJ_THREADS,
+  TOP_REPUTATION_USERS as PRAYAGRAJ_USERS,
+  COMMUNITY_TOURISM_SIGNALS as PRAYAGRAJ_SIGNALS,
+} from '../data/prayagraj/community';
 import { DELHI_PLACES } from '../data/delhiData';
+import { PRAYAGRAJ_PLACES } from '../data/prayagrajData';
 import {
   MessageCircle,
   Plus,
@@ -44,13 +56,23 @@ import { cn } from '../utils/cn';
  */
 export function CommunityPage() {
   const { city } = useCity();
+  const isPrayagraj = city?.slug === 'prayagraj';
+  const availablePlaces = isPrayagraj ? PRAYAGRAJ_PLACES : DELHI_PLACES;
+  const CHANNELS = isPrayagraj ? PRAYAGRAJ_CHANNELS : DELHI_CHANNELS;
+  const TOP_REPUTATION_USERS = isPrayagraj ? PRAYAGRAJ_USERS : DELHI_USERS;
+  const COMMUNITY_TOURISM_SIGNALS = isPrayagraj ? PRAYAGRAJ_SIGNALS : DELHI_SIGNALS;
 
-  // Active Filter States
+  // Active Category Filters State
   const [activeChannel, setActiveChannel] = useState('all');
   const [activePostType, setActivePostType] = useState('all'); // 'all', 'ground_report', 'ask_local', 'discovery', 'experience'
   const [activeSort, setActiveSort] = useState('hot'); // 'hot', 'new', 'top', 'helpful'
   const [searchQuery, setSearchQuery] = useState('');
-  const [threads, setThreads] = useState(INITIAL_THREADS);
+  const [threads, setThreads] = useState(isPrayagraj ? PRAYAGRAJ_THREADS : DELHI_THREADS);
+
+  // Sync threads on city change
+  React.useEffect(() => {
+    setThreads(isPrayagraj ? PRAYAGRAJ_THREADS : DELHI_THREADS);
+  }, [isPrayagraj]);
 
   // Modal State for New Post Creation, Guidelines & Contributors
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -162,7 +184,7 @@ export function CommunityPage() {
       return;
     }
 
-    const matchedPlace = DELHI_PLACES.find((p) => p.slug === newPlaceSlug) || DELHI_PLACES[0];
+    const matchedPlace = availablePlaces.find((p) => p.slug === newPlaceSlug) || availablePlaces[0];
 
     // Build structured data based on post type category
     let structuredData = {};
@@ -953,14 +975,14 @@ export function CommunityPage() {
                   >
                     <span className="truncate font-semibold text-text-high flex items-center gap-1">
                       <MapPin size={13} className="text-amber-400 shrink-0" />
-                      <span className="truncate">{DELHI_PLACES.find((p) => p.slug === newPlaceSlug)?.name || 'Select Place'}</span>
+                      <span className="truncate">{availablePlaces.find((p) => p.slug === newPlaceSlug)?.name || 'Select Place'}</span>
                     </span>
                     <ChevronDown size={14} className={cn('text-amber-400 transition-transform shrink-0', isPlaceDropdownOpen && 'rotate-180')} />
                   </button>
 
                   {isPlaceDropdownOpen && (
                     <div className="absolute left-0 right-0 top-full mt-1.5 z-[100] max-h-52 overflow-y-auto scrollbar-none rounded-2xl bg-bg-raised border border-amber-500/40 shadow-lifted p-1.5 space-y-1 backdrop-blur-md">
-                      {DELHI_PLACES.map((p) => (
+                      {availablePlaces.map((p) => (
                         <button
                           key={p.id}
                           type="button"
