@@ -2,7 +2,7 @@ import { useState, useCallback, useRef } from 'react';
 import { useCity } from '../../config/CityContext';
 import { places } from '../../data/delhi/places';
 import { hiddenGems } from '../../data/delhi/hiddenGems';
-import { streamGemini } from './geminiService';
+import { streamGroq } from './groqService';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -66,13 +66,15 @@ If no alternatives apply, return "alternatives": [].`;
  * Error messages shown in the chat bubble for each error type.
  */
 const ERROR_MESSAGES = {
-  GEMINI_KEY_MISSING:
-    'The AI assistant is offline. Add VITE_GEMINI_API_KEY to your .env file to enable live responses.',
-  GEMINI_RATE_LIMIT:
+  GROQ_KEY_MISSING:
+    'The AI assistant is offline. Add VITE_GROQ_API_KEY to your .env file to enable live responses.',
+  GROQ_KEY_INVALID:
+    'The Groq API key is invalid or expired. Please check your VITE_GROQ_API_KEY in .env.',
+  GROQ_RATE_LIMIT:
     'The assistant is receiving too many requests right now. Please wait a moment and try again.',
-  GEMINI_BAD_REQUEST:
+  GROQ_BAD_REQUEST:
     'Could not process that request. Please try rephrasing your question.',
-  GEMINI_API_ERROR:
+  GROQ_API_ERROR:
     'There was a network error reaching the assistant. Please check your connection and try again.',
   DEFAULT:
     'The assistant encountered an unexpected error. Please try again.',
@@ -169,7 +171,7 @@ export function useCrowdAssistant() {
         //    then drops immediately giving snappy perceived response time
         let rawResponse = '';
         let firstChunk = true;
-        for await (const chunk of streamGemini(systemPrompt, currentHistory, text)) {
+        for await (const chunk of streamGroq(systemPrompt, currentHistory, text)) {
           rawResponse += chunk;
           if (firstChunk) {
             // Drop typing indicator the moment first text arrives
@@ -181,11 +183,11 @@ export function useCrowdAssistant() {
         // 4. Parse the complete response into { text, alternatives }
         const { text: replyText, alternatives } = parseGeminiResponse(rawResponse);
 
-        // 5. Update multi-turn history for subsequent calls
+        // 5. Update multi-turn history (OpenAI format: content string, role 'assistant')
         historyRef.current = [
           ...currentHistory,
-          { role: 'user', parts: [{ text }] },
-          { role: 'model', parts: [{ text: rawResponse }] },
+          { role: 'user', content: text },
+          { role: 'assistant', content: rawResponse },
         ];
 
         // 6. Add assistant reply with any alternative cards
