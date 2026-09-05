@@ -1,8 +1,8 @@
-﻿/**
+/**
  * ==============================================================================
  * GROQ API SERVICE
  * Wrapper around the Groq OpenAI-compatible Chat Completions API with streaming.
- * Model: llama-3.3-70b-versatile — best JSON reliability + ultra-low latency
+ * Model: groq/compound — Groq's own compound model, fast with excellent JSON instruction following
  *
  * Groq inference is ~10x faster than Gemini for the same output quality.
  * SSE streaming format follows the OpenAI spec:
@@ -15,7 +15,7 @@
  */
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const GROQ_MODEL = 'llama-3.3-70b-versatile';
+const GROQ_MODEL = 'groq/compound'; // Groq's own compound model — fast, great JSON instruction following
 
 /**
  * Calls the Groq streaming API and yields text chunks as they arrive.
