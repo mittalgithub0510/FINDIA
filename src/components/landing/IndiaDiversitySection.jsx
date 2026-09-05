@@ -56,7 +56,7 @@ export function IndiaDiversitySection() {
   return (
     <section className="py-20 bg-bg-base/90 border-t border-white/5 relative overflow-hidden">
       <Container size="wide" className="space-y-12">
-        
+
         {/* Section Header */}
         <div className="space-y-3 max-w-2xl">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-amber-400">

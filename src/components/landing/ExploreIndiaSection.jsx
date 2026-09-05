@@ -28,7 +28,7 @@ export function ExploreIndiaSection() {
   return (
     <section className="py-20 bg-bg-raised/40 border-t border-white/5 relative">
       <Container size="wide" className="space-y-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-xl">
