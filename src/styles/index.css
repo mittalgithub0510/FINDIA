@@ -400,3 +400,211 @@ html, body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==============================================================================
+ * PRINT UTILITY — hides elements that are screen-only
+ * ============================================================================== */
+.print-hide {
+  /* Screen: normal. Print: hidden via @media print below. */
+}
+
+/* ==============================================================================
+ * PRINT / SAVE-AS-PDF — FINDIA AI Itinerary
+ * Overrides dark theme to produce a clean, high-contrast black-on-white PDF.
+ * ============================================================================== */
+@media print {
+  /* ── 0. Page setup ── */
+  @page {
+    size: A4 portrait;
+    margin: 18mm 14mm 16mm 14mm;
+  }
+
+  /* ── 1. Global resets ── */
+  *,
+  *::before,
+  *::after {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    color: #111 !important;
+    border-color: #ccc !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── 2. Hide all chrome — nav, footer, action buttons, tabs, refine box ── */
+  .print-hide,
+  nav,
+  header,
+  footer,
+  .grain,
+  [class*="blur"],
+  [class*="animate-ping"],
+  [class*="animate-pulse"],
+  [class*="animate-spin"] {
+    display: none !important;
+  }
+
+  /* ── 3. Reset layout so itinerary fills the page width ── */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+    font-family: "Inter", Arial, sans-serif;
+    background: white !important;
+  }
+
+  /* Hide everything on the page EXCEPT the printable itinerary */
+  body > * {
+    display: none !important;
+  }
+
+  /* The Vite/React root — show only what we need */
+  #root {
+    display: block !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Show all ancestor wrappers of the itinerary */
+  #root > *,
+  #root > * > *,
+  #root > * > * > * {
+    display: block !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
+  /* ── 4. The printable block itself ── */
+  #printable-itinerary {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  /* ── 5. Header card ── */
+  #printable-itinerary > div:first-child {
+    border: 2px solid #222 !important;
+    border-radius: 8px !important;
+    padding: 14pt 16pt !important;
+    margin-bottom: 14pt !important;
+    background: white !important;
+    page-break-inside: avoid;
+  }
+
+  /* ── 6. Trip title & sub-labels ── */
+  #printable-itinerary h1 {
+    font-size: 22pt !important;
+    font-weight: 800 !important;
+    color: #000 !important;
+    margin: 0 0 6pt !important;
+    line-height: 1.2 !important;
+  }
+
+  #printable-itinerary h3 {
+    font-size: 15pt !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    margin: 0 0 4pt !important;
+  }
+
+  #printable-itinerary h4 {
+    font-size: 12pt !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    margin: 0 0 3pt !important;
+  }
+
+  #printable-itinerary p,
+  #printable-itinerary span,
+  #printable-itinerary div {
+    color: #111 !important;
+  }
+
+  /* ── 7. Pill / badge strips ── */
+  #printable-itinerary [class*="rounded-xl"],
+  #printable-itinerary [class*="rounded-2xl"],
+  #printable-itinerary [class*="rounded-3xl"],
+  #printable-itinerary [class*="rounded-md"],
+  #printable-itinerary [class*="rounded-lg"] {
+    border-radius: 4pt !important;
+    border: 1px solid #bbb !important;
+    background: #f7f7f7 !important;
+    color: #111 !important;
+  }
+
+  /* ── 8. Day theme banner ── */
+  #printable-itinerary .space-y-6 > div:first-child {
+    background: #f0f0f0 !important;
+    border: 1.5px solid #444 !important;
+    border-radius: 6pt !important;
+    padding: 10pt 12pt !important;
+    margin-bottom: 8pt !important;
+    page-break-inside: avoid;
+  }
+
+  /* ── 9. Activity slot cards ── */
+  #printable-itinerary .space-y-4 > div {
+    border: 1px solid #bbb !important;
+    border-radius: 5pt !important;
+    padding: 9pt 11pt !important;
+    margin-bottom: 7pt !important;
+    background: white !important;
+    page-break-inside: avoid;
+  }
+
+  /* Section header dividers inside cards */
+  #printable-itinerary [class*="border-b"] {
+    border-bottom: 1px solid #ccc !important;
+    padding-bottom: 5pt !important;
+    margin-bottom: 5pt !important;
+  }
+
+  /* ── 10. Crowd advisory callout ── */
+  #printable-itinerary .space-y-6 > div:last-child[class*="rounded"] {
+    border: 1.5px dashed #777 !important;
+    border-radius: 5pt !important;
+    padding: 8pt 10pt !important;
+    background: #fffdf0 !important;
+    page-break-inside: avoid;
+  }
+
+  /* ── 11. Per-day section spacing & page breaks ── */
+  #printable-itinerary .space-y-6 {
+    margin-bottom: 20pt !important;
+    page-break-after: auto;
+  }
+
+  /* Force each day to start on its own page if it doesn't fit */
+  #printable-itinerary .space-y-8 > .space-y-6 {
+    page-break-before: auto;
+  }
+
+  /* ── 12. FINDIA footer watermark on every printed page ── */
+  #printable-itinerary::after {
+    content: "Generated with FINDIA AI — Explore Beyond Thinking! • findia.in";
+    display: block !important;
+    margin-top: 20pt;
+    padding-top: 8pt;
+    border-top: 1px solid #999 !important;
+    font-size: 8pt;
+    color: #555 !important;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── 13. Make sure SVG icons print visibly ── */
+  svg {
+    color: #333 !important;
+    fill: currentColor;
+  }
+}
