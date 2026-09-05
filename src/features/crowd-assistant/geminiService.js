@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ==============================================================================
  * GEMINI API SERVICE
  * Wrapper around the Google Gemini streamGenerateContent API.
@@ -47,7 +47,7 @@ export async function* streamGemini(systemPrompt, history, userMessage) {
     ],
     generationConfig: {
       temperature: 0.4,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 4096,
     },
   };
 
@@ -70,9 +70,40 @@ export async function* streamGemini(systemPrompt, history, userMessage) {
   const decoder = new TextDecoder('utf-8');
   let buffer = '';
 
+  /**
+   * Processes a single SSE line and yields any text found in it.
+   */
+  function* processLine(line) {
+    if (!line.startsWith('data: ')) return;
+    const jsonStr = line.slice(6).trim();
+    if (!jsonStr || jsonStr === '[DONE]') return;
+    try {
+      const chunk = JSON.parse(jsonStr);
+      const finishReason = chunk?.candidates?.[0]?.finishReason;
+      if (finishReason === 'MAX_TOKENS') {
+        console.warn('[GeminiService] Response hit MAX_TOKENS — consider raising maxOutputTokens');
+      }
+      const parts = chunk?.candidates?.[0]?.content?.parts ?? [];
+      for (const part of parts) {
+        if (part.text) yield part.text;
+      }
+    } catch {
+      // Malformed SSE chunk — skip silently
+    }
+  }
+
   while (true) {
     const { done, value } = await reader.read();
-    if (done) break;
+
+    // Flush remaining buffer when stream ends — this is critical:
+    // the final SSE line may not have a trailing \n so it stays in
+    // the buffer and never gets processed without this flush.
+    if (done) {
+      if (buffer.trim()) {
+        yield* processLine(buffer.trim());
+      }
+      break;
+    }
 
     buffer += decoder.decode(value, { stream: true });
     const lines = buffer.split('\n');
@@ -80,19 +111,7 @@ export async function* streamGemini(systemPrompt, history, userMessage) {
     buffer = lines.pop() ?? '';
 
     for (const line of lines) {
-      if (!line.startsWith('data: ')) continue;
-      const jsonStr = line.slice(6).trim();
-      if (jsonStr === '[DONE]') return;
-      try {
-        const chunk = JSON.parse(jsonStr);
-        // Collect text from all parts in this chunk
-        const parts = chunk?.candidates?.[0]?.content?.parts ?? [];
-        for (const part of parts) {
-          if (part.text) yield part.text;
-        }
-      } catch {
-        // Malformed SSE chunk — skip silently
-      }
+      yield* processLine(line);
     }
   }
 }
