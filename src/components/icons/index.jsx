@@ -56,6 +56,8 @@ export function Close(props) {
   );
 }
 
+export const X = Close;
+
 export function Menu(props) {
   return (
     <IconBase {...props}>
@@ -290,6 +292,18 @@ export function Metro(props) {
     </IconBase>
   );
 }
+
+export function Bus(props) {
+  return (
+    <IconBase {...props}>
+      <rect x="4" y="3" width="16" height="16" rx="2" />
+      <path d="M4 11h16" />
+      <path d="M8 15h.01M16 15h.01" />
+      <path d="M6 19v2M18 19v2" />
+    </IconBase>
+  );
+}
+
 
 export function Clock(props) {
   return (
@@ -647,10 +661,6 @@ export function MessageSquare(props) {
   );
 }
 
-export function X(props) {
-  return <Close {...props} />;
-}
-
 export function Navigation(props) {
   return (
     <IconBase {...props}>
@@ -678,6 +688,15 @@ export function Coffee(props) {
       <line x1="6" y1="1" x2="6" y2="4" />
       <line x1="10" y1="1" x2="10" y2="4" />
       <line x1="14" y1="1" x2="14" y2="4" />
+    </IconBase>
+  );
+}
+
+export function BookOpen(props) {
+  return (
+    <IconBase {...props}>
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
     </IconBase>
   );
 }
@@ -719,8 +738,6 @@ export function Printer(props) {
     </IconBase>
   );
 }
-
-
 
 
 
