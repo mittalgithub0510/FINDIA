@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CrowdBadge } from '../../components/common/CrowdBadge';
 import { Walk, ArrowRight } from '../../components/icons';
 import { cn } from '../../utils/cn';
@@ -8,6 +9,7 @@ import { cn } from '../../utils/cn';
  *
  * @component
  * @param {Object} props
+ * @param {string} props.slug - Exact data slug for place navigation (from dataset)
  * @param {string} props.title - Monument or site name
  * @param {string} props.distance - Walking or transit distance
  * @param {'low' | 'moderate' | 'heavy' | 'unknown'} props.crowdLevel - Live crowd status
@@ -16,6 +18,7 @@ import { cn } from '../../utils/cn';
  * @param {string} [props.className]
  */
 export function AlternativeCard({
+  slug,
   title,
   distance,
   crowdLevel = 'low',
@@ -23,9 +26,18 @@ export function AlternativeCard({
   description,
   className = '',
 }) {
+  const navigate = useNavigate();
+
   const handleSelectAlternative = () => {
-    // TODO: Wire navigation or itinerary rerouting when teammate implements backend
-    console.info(`[CrowdAssistant] Alternative selected: "${title}" (routing pending).`);
+    // Prefer the exact slug from the dataset; fall back to slugifying the title
+    const resolvedSlug =
+      slug ||
+      title
+        .toLowerCase()
+        .replace(/['']/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+    navigate(`/places/${resolvedSlug}`);
   };
 
   return (
